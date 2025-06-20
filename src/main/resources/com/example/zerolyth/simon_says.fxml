@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<GridPane fx:controller="com.example.zerolyth.puzzle.SimonSaysController"
+          xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="10" vgap="10">
+
+    <Button fx:id="redButton" GridPane.rowIndex="0" GridPane.columnIndex="0"
+            style="-fx-background-color: red; -fx-min-width: 100px; -fx-min-height: 100px;" />
+
+    <Button fx:id="greenButton" GridPane.rowIndex="0" GridPane.columnIndex="1"
+            style="-fx-background-color: green; -fx-min-width: 100px; -fx-min-height: 100px;" />
+
+    <Button fx:id="blueButton" GridPane.rowIndex="1" GridPane.columnIndex="0"
+            style="-fx-background-color: blue; -fx-min-width: 100px; -fx-min-height: 100px;" />
+
+    <Button fx:id="yellowButton" GridPane.rowIndex="1" GridPane.columnIndex="1"
+            style="-fx-background-color: yellow; -fx-min-width: 100px; -fx-min-height: 100px;" />
+
+    <Label fx:id="statusLabel" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2"
+           text="Press any button to start" alignment="CENTER" />
+</GridPane>
