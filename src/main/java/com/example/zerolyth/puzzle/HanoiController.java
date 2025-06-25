@@ -1,63 +1,63 @@
 package com.example.zerolyth.puzzle;
 
+
 import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 
 import java.util.Stack;
 
 public class HanoiController {
 
-    @FXML private Rectangle disk1, disk2, disk3;
+    @FXML private ImageView block1, block2, block3; // frog, snake, eagle
     @FXML private Pane towerPane1, towerPane2, towerPane3;
 
     private double offsetX, offsetY;
-    private Stack<Rectangle> tower1 = new Stack<>();
-    private Stack<Rectangle> tower2 = new Stack<>();
-    private Stack<Rectangle> tower3 = new Stack<>();
-    private final double baseHeight = 10.0; // Height of the base
-    private boolean isDragging = false; // Flag to track if the disk is eligible for dragging
+    private Stack<ImageView> tower1 = new Stack<>();
+    private Stack<ImageView> tower2 = new Stack<>();
+    private Stack<ImageView> tower3 = new Stack<>();
+    private final double baseHeight = 10.0;
+    private boolean isDragging = false;
     private int moveCount = 0;
-    private boolean gameWon = false; // Track game state
+    private boolean gameWon = false;
 
     @FXML
     public void initialize() {
-        // Add disks to tower1 initially, bottom to top
-        tower1.push(disk3);
-        snapToTower(disk3, towerPane1, 1);
-        tower1.push(disk2);
-        snapToTower(disk2, towerPane1, 2);
-        tower1.push(disk1);
-        snapToTower(disk1, towerPane1, 3);
+        // Add blocks to tower1: bottom (eagle) to top (frog)
+        tower1.push(block3); // eagle (largest)
+        snapToTower(block3, towerPane1, 1);
+        tower1.push(block2); // snake (middle)
+        snapToTower(block2, towerPane1, 2);
+        tower1.push(block1); // frog (smallest)
+        snapToTower(block1, towerPane1, 3);
 
-        makeDraggable(disk1);
-        makeDraggable(disk2);
-        makeDraggable(disk3);
+        makeDraggable(block1);
+        makeDraggable(block2);
+        makeDraggable(block3);
     }
 
-    private void makeDraggable(Rectangle disk) {
-        disk.setOnMousePressed(e -> {
-            if (gameWon) return; // Disable moves after winning
-
-            Stack<Rectangle> currentTower = getCurrentTowerOfDisk(disk);
-            if (currentTower != null && !currentTower.isEmpty() && currentTower.peek() == disk) {
-                offsetX = e.getSceneX() - disk.getLayoutX();
-                offsetY = e.getSceneY() - disk.getLayoutY();
+    private void makeDraggable(ImageView block) {
+        block.setOnMousePressed(e -> {
+            if (gameWon) return;
+            Stack<ImageView> currentTower = getCurrentTowerOfBlock(block);
+            if (currentTower != null && !currentTower.isEmpty() && currentTower.peek() == block) {
+                offsetX = e.getSceneX() - block.getLayoutX();
+                offsetY = e.getSceneY() - block.getLayoutY();
                 isDragging = true;
             } else {
                 isDragging = false;
             }
         });
 
-        disk.setOnMouseDragged(e -> {
+        block.setOnMouseDragged(e -> {
             if (isDragging && !gameWon) {
-                disk.setLayoutX(e.getSceneX() - offsetX);
-                disk.setLayoutY(e.getSceneY() - offsetY);
+                block.setLayoutX(e.getSceneX() - offsetX);
+                block.setLayoutY(e.getSceneY() - offsetY);
             }
         });
 
-        disk.setOnMouseReleased(e -> {
+        block.setOnMouseReleased(e -> {
             if (isDragging && !gameWon) {
                 handleDrop(e);
                 isDragging = false;
@@ -66,66 +66,51 @@ public class HanoiController {
     }
 
     private void handleDrop(MouseEvent e) {
-        Rectangle disk = (Rectangle) e.getSource();
+        ImageView block = (ImageView) e.getSource();
         Pane targetTowerPane = getTargetTower(e.getSceneX());
-        Stack<Rectangle> fromTower = getCurrentTowerOfDisk(disk);
+        Stack<ImageView> fromTower = getCurrentTowerOfBlock(block);
 
-        // If dropped outside valid area
         if (targetTowerPane == null) {
-            snapToTower(disk, getPaneByStack(fromTower), fromTower.size());
+            snapToTower(block, getPaneByStack(fromTower), fromTower.size());
             return;
         }
 
-        Stack<Rectangle> toTower = getStackByPane(targetTowerPane);
+        Stack<ImageView> toTower = getStackByPane(targetTowerPane);
         Pane fromTowerPane = getPaneByStack(fromTower);
 
-        // Prevent moving to the same tower
         if (fromTowerPane == targetTowerPane) {
-            snapToTower(disk, fromTowerPane, fromTower.size());
+            snapToTower(block, fromTowerPane, fromTower.size());
             return;
         }
 
-        // Validate move
-        if (!fromTower.isEmpty() && fromTower.peek() == disk) {
-            if (toTower.isEmpty() || disk.getWidth() < toTower.peek().getWidth()) {
-                // Valid move - update towers
+        if (!fromTower.isEmpty() && fromTower.peek() == block) {
+            if (toTower.isEmpty() || block.getFitWidth() < toTower.peek().getFitWidth()) {
                 fromTower.pop();
-                toTower.push(disk);
-                snapToTower(disk, targetTowerPane, toTower.size());
-
-                // Count and display moves
+                toTower.push(block);
+                snapToTower(block, targetTowerPane, toTower.size());
                 moveCount++;
-                System.out.println("Move #" + moveCount + ": Moved disk to " +
-                        getTowerName(targetTowerPane));
-
-                // Check win condition
+                System.out.println("Move #" + moveCount + ": Moved block to " + getTowerName(targetTowerPane));
                 checkWinCondition();
             } else {
-                // Invalid move (disk too large)
-                snapToTower(disk, fromTowerPane, fromTower.size());
-                System.out.println("Invalid move! Cannot place larger disk on smaller one.");
+                snapToTower(block, fromTowerPane, fromTower.size());
+                System.out.println("Invalid move! Cannot place larger block on smaller one.");
             }
         } else {
-            // Shouldn't happen due to drag check, but handle anyway
-            snapToTower(disk, fromTowerPane, fromTower.size());
+            snapToTower(block, fromTowerPane, fromTower.size());
         }
     }
 
     private void checkWinCondition() {
-        // Win when all 3 disks are on tower3
         if (tower3.size() == 3) {
             gameWon = true;
             System.out.println("\nCONGRATULATIONS! You won in " + moveCount + " moves!");
             System.out.println("Minimum possible moves: 7");
-
-            // Optional: Disable further moves
-            disk1.setDisable(true);
-            disk2.setDisable(true);
-            disk3.setDisable(true);
+            block1.setDisable(true);
+            block2.setDisable(true);
+            block3.setDisable(true);
         }
     }
 
-    // Helper to get tower name for messages
     private String getTowerName(Pane towerPane) {
         if (towerPane == towerPane1) return "Tower 1";
         if (towerPane == towerPane2) return "Tower 2";
@@ -142,28 +127,67 @@ public class HanoiController {
         return null;
     }
 
-    private void snapToTower(Rectangle disk, Pane towerPane, int positionFromBottom) {
-        double centerX = towerPane.getLayoutX() + (towerPane.getPrefWidth() - disk.getWidth()) / 2;
-        double bottomY = towerPane.getLayoutY() + towerPane.getPrefHeight() - baseHeight;
-        double diskHeight = disk.getHeight();
-        disk.setLayoutX(centerX);
-        disk.setLayoutY(bottomY - diskHeight * positionFromBottom);
+    private void snapToTower(ImageView block, Pane towerPane, int positionFromBottom) {
+        ImageView platform = (ImageView) towerPane.getChildren().get(0);
+        double platformTopY = towerPane.getLayoutY() + platform.getLayoutY();
+        double centerX = towerPane.getLayoutX() + (towerPane.getPrefWidth() - block.getFitWidth()) / 2;
+
+        double blockY;
+        if (positionFromBottom == 1) {
+            // Bottom block: align with platform with custom overlap
+            double platformOverlap = getPlatformOverlap(block);
+            blockY = platformTopY - block.getFitHeight() + platformOverlap;
+        } else {
+            // Get the block below
+            Stack<ImageView> tower = getStackByPane(towerPane);
+            ImageView blockBelow = tower.get(positionFromBottom - 2);
+            double blockBelowY = blockBelow.getLayoutY();
+
+            // Calculate custom overlap based on block types
+            double overlap = calculateOverlap(block, blockBelow);
+            blockY = blockBelowY - block.getFitHeight() + overlap;
+        }
+
+        block.setLayoutX(centerX);
+        block.setLayoutY(blockY);
+        block.toFront();
     }
 
-    private Stack<Rectangle> getCurrentTowerOfDisk(Rectangle disk) {
-        if (tower1.contains(disk)) return tower1;
-        if (tower2.contains(disk)) return tower2;
-        if (tower3.contains(disk)) return tower3;
+    private double getPlatformOverlap(ImageView block) {
+        // Custom platform overlap for each block type
+        if (block == block1) return 55.0;  // Frog
+        if (block == block2) return 35.0;  // Snake
+        if (block == block3) return 14.0;  // Eagle
+        return 0.0;  // Default
+    }
+
+    private double calculateOverlap(ImageView blockAbove, ImageView blockBelow) {
+        // Eagle (block3) with Snake (block2) on top
+        if (blockBelow == block3 && blockAbove == block2) return 25.0;
+
+        // Snake (block2) with Frog (block1) on top
+        if (blockBelow == block2 && blockAbove == block1) return 44.0;
+
+        // Eagle (block3) with Frog (block1) on top
+        if (blockBelow == block3 && blockAbove == block1) return 44.0;
+
+        return 30.0; // Default overlap
+    }
+
+    private Stack<ImageView> getCurrentTowerOfBlock(ImageView block) {
+        if (tower1.contains(block)) return tower1;
+        if (tower2.contains(block)) return tower2;
+        if (tower3.contains(block)) return tower3;
         return null;
     }
 
-    private Stack<Rectangle> getStackByPane(Pane towerPane) {
+    private Stack<ImageView> getStackByPane(Pane towerPane) {
         if (towerPane == towerPane1) return tower1;
         if (towerPane == towerPane2) return tower2;
         return tower3;
     }
 
-    private Pane getPaneByStack(Stack<Rectangle> tower) {
+    private Pane getPaneByStack(Stack<ImageView> tower) {
         if (tower == tower1) return towerPane1;
         if (tower == tower2) return towerPane2;
         return towerPane3;

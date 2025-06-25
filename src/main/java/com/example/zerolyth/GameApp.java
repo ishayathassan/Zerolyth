@@ -12,19 +12,16 @@ public class GameApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Initialize player (Player 1 - Human)
-        Player player = new Player("Player 1", PlayerType.HUMAN);
+        Player player = new Player("Player 1", PlayerType.PROTAGONIST);
 
         // Load level from text file
         Level level = LevelLoader.loadFromFile("levels/level1.txt");
-//        Level level = LevelLoader.loadFromFile("levels/test_level.txt");
 
         // Initialize game session
         gameSession = new GameSession(player, level);
 
         // Load FXML and controller
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/zerolyth/level1.fxml"));
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/zerolyth/test_level_48x48.fxml"));
 
         Parent root = loader.load();
 

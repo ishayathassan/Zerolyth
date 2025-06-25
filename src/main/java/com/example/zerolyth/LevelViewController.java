@@ -1,5 +1,6 @@
 package com.example.zerolyth;
 
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -7,13 +8,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
 public class LevelViewController {
 
     @FXML
     private GridPane grid;
     private ImageView playerView;
-
+    private Image playerUp;
+    private Image playerDown;
+    private Image playerLeft;
+    private Image playerRight;
     private GameSession gameSession;
     private int playerRow;
     private int playerCol;
@@ -22,7 +27,39 @@ public class LevelViewController {
         this.gameSession = session;
     }
 
+
+
+    private void loadPlayerImages() {
+        String base;
+        PlayerType type = gameSession.getPlayer().getType();
+        if(type == PlayerType.PROTAGONIST) {
+            base = "protagonist";
+        } else {
+            base = "antagonist";
+        }
+        playerUp = new Image(getClass().getResourceAsStream("assets/player/" + base + "_up.png"));
+        playerDown = new Image(getClass().getResourceAsStream("assets/player/" + base + "_down.png"));
+        playerLeft = new Image(getClass().getResourceAsStream("assets/player/" + base + "_left.png"));
+        playerRight = new Image(getClass().getResourceAsStream("assets/player/" + base + "_right.png"));
+    }
+    private void animateDirectionChange(Image newImage) {
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(8), playerView);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(8), playerView);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+
+        fadeOut.setOnFinished(e -> {
+            playerView.setImage(newImage);
+            fadeIn.play();
+        });
+
+        fadeOut.play();
+    }
     public void initializeLevel() {
+        loadPlayerImages();
         TileType[][] map = gameSession.getCurrentLevel().getMap();
         playerRow = gameSession.getCurrentLevel().getStartRow();
         playerCol = gameSession.getCurrentLevel().getStartCol();
@@ -41,8 +78,7 @@ public class LevelViewController {
 
     private ImageView createPlayerView() {
         try {
-            Image playerImage = new Image(getClass().getResourceAsStream("assets/knight.png"));
-            ImageView view = new ImageView(playerImage);
+            ImageView view = new ImageView(playerDown);
             view.setFitHeight(48);
             view.setFitWidth(48);
             view.setPreserveRatio(true);
@@ -59,10 +95,25 @@ public class LevelViewController {
         int newCol = playerCol;
 
         switch (event.getCode()) {
-            case W -> newRow--;
-            case S -> newRow++;
-            case A -> newCol--;
-            case D -> newCol++;
+            case W -> {
+                newRow--;
+                animateDirectionChange(playerUp);
+            }
+            case S -> {
+                newRow++;
+                animateDirectionChange(playerDown);
+
+            }
+            case A -> {
+                newCol--;
+                animateDirectionChange(playerLeft);
+
+            }
+            case D -> {
+                newCol++;
+                animateDirectionChange(playerRight);
+
+            }
             default -> {
                 return;
             }

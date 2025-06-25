@@ -2,6 +2,8 @@ package com.example.zerolyth.puzzle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +15,9 @@ public class SlidingTilePuzzleController {
     @FXML private Button btn20, btn21, btn22;
 
     private Button[][] buttons;
+    private int[][] tiles; // 0 = empty, 1-8 = tile numbers
+    private String[][] imagePaths; // image path for each tile
+    private String[] solvedImagePaths; // correct order
     private int emptyRow;
     private int emptyCol;
 
@@ -23,48 +28,79 @@ public class SlidingTilePuzzleController {
                 {btn10, btn11, btn12},
                 {btn20, btn21, btn22}
         };
+        tiles = new int[3][3];
+        imagePaths = new String[3][3];
 
+        // Initialize image paths (update as needed)
+        String[] paths = {
+                "/com/example/zerolyth/assets/knight/1.jpg",
+                "/com/example/zerolyth/assets/knight/2.jpg",
+                "/com/example/zerolyth/assets/knight/3.jpg",
+                "/com/example/zerolyth/assets/knight/4.jpg",
+                "/com/example/zerolyth/assets/knight/5.jpg",
+                "/com/example/zerolyth/assets/knight/6.jpg",
+                "/com/example/zerolyth/assets/knight/7.jpg",
+                "/com/example/zerolyth/assets/knight/8.jpg",
+                "" // empty
+        };
+        solvedImagePaths = paths.clone();
         scrambleBoard();
     }
 
     private void scrambleBoard() {
-        List<String> tiles = new ArrayList<>();
-        for (int i = 1; i <= 8; i++) {
-            tiles.add(String.valueOf(i));
-        }
-        tiles.add(""); // empty tile
-
-        Collections.shuffle(tiles); // Randomize
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < 9; i++) indices.add(i); // 0-8
+        Collections.shuffle(indices);
 
         int idx = 0;
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
-                String value = tiles.get(idx++);
-                Button btn = buttons[r][c];
-                btn.setText(value);
-
-                if (value.equals("")) {
+                int shuffledIdx = indices.get(idx++);
+                if (shuffledIdx == 8) { // empty tile
+                    tiles[r][c] = 0;
+                    imagePaths[r][c] = "";
                     emptyRow = r;
                     emptyCol = c;
+                } else {
+                    tiles[r][c] = shuffledIdx + 1;
+                    imagePaths[r][c] = solvedImagePaths[shuffledIdx];
                 }
+                setButtonImage(buttons[r][c], imagePaths[r][c]);
             }
         }
-
         rebindActions();
+    }
+
+    private void setButtonImage(Button btn, String imgPath) {
+        if (imgPath == null || imgPath.isEmpty()) {
+            btn.setGraphic(null);
+        } else {
+            ImageView iv = new ImageView(new Image(getClass().getResourceAsStream(imgPath)));
+            iv.setFitWidth(128);
+            iv.setFitHeight(128);
+            iv.setPreserveRatio(false); // Fill the button completely
+            btn.setGraphic(iv);
+        }
+        btn.setText(""); // Ensure no text is shown
     }
 
     private void handleMove(int row, int col) {
         if ((Math.abs(row - emptyRow) == 1 && col == emptyCol) ||
                 (Math.abs(col - emptyCol) == 1 && row == emptyRow)) {
 
-            Button clicked = buttons[row][col];
-            Button empty = buttons[emptyRow][emptyCol];
+            // Swap in tiles and imagePaths arrays
+            int tempTile = tiles[row][col];
+            tiles[row][col] = tiles[emptyRow][emptyCol];
+            tiles[emptyRow][emptyCol] = tempTile;
 
-            // Swap text
-            empty.setText(clicked.getText());
-            clicked.setText("");
+            String tempPath = imagePaths[row][col];
+            imagePaths[row][col] = imagePaths[emptyRow][emptyCol];
+            imagePaths[emptyRow][emptyCol] = tempPath;
 
-            // Update empty location
+            // Update button graphics
+            setButtonImage(buttons[row][col], imagePaths[row][col]);
+            setButtonImage(buttons[emptyRow][emptyCol], imagePaths[emptyRow][emptyCol]);
+
             emptyRow = row;
             emptyCol = col;
 
@@ -77,7 +113,7 @@ public class SlidingTilePuzzleController {
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
                 Button btn = buttons[r][c];
-                if (btn.getText().isEmpty()) {
+                if (tiles[r][c] == 0) {
                     btn.setOnAction(null);
                 } else if ((Math.abs(r - emptyRow) == 1 && c == emptyCol) ||
                         (Math.abs(c - emptyCol) == 1 && r == emptyRow)) {
@@ -91,21 +127,13 @@ public class SlidingTilePuzzleController {
     }
 
     private void checkWin() {
-        String[][] correct = {
-                {"1", "2", "3"},
-                {"4", "5", "6"},
-                {"7", "8", ""}
-        };
-
+        int idx = 0;
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
-                if (!buttons[r][c].getText().equals(correct[r][c])) {
-                    return;
-                }
+                String expected = solvedImagePaths[idx++];
+                if (!expected.equals(imagePaths[r][c])) return;
             }
         }
-
         System.out.println("🎉 You won!");
     }
 }
-

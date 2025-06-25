@@ -6,6 +6,7 @@ public class Player {
     private int health;
     private int score;
 
+
     public Player(String name, PlayerType type) {
         this.name = name;
         this.type = type;
@@ -36,4 +37,5 @@ public class Player {
     public void addScore(int points) {
         this.score += points;
     }
+
 }
