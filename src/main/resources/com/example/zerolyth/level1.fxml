@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -7,10 +10,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1056.0" prefWidth="968.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.zerolyth.LevelViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1056.0" prefWidth="868.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.zerolyth.LevelViewController">
    <children>
-      <ImageView fitHeight="1056.0" fitWidth="968.0" pickOnBounds="true">
+      <ImageView fitHeight="1056.0" fitWidth="868.0" pickOnBounds="true">
          <image>
             <Image url="@assets/background2_768x1156.png" />
          </image>
@@ -3626,5 +3630,19 @@
             </StackPane>
          </children>
       </GridPane>
+      <Separator layoutX="87.0" orientation="VERTICAL" prefHeight="1056.0" prefWidth="0.0" />
+      <ProgressBar fx:id="antagonistProgressBar" layoutX="-43.0" layoutY="636.0" prefHeight="32.0" prefWidth="200.0" progress="0.0" rotate="-90.0" styleClass="red-bar" stylesheets="@level_style.css" />
+      <Separator layoutX="-4.0" layoutY="528.0" prefHeight="2.0" prefWidth="92.0" />
+      <ProgressBar fx:id="protagonistProgressBar" layoutX="-43.0" layoutY="386.0" prefHeight="32.0" prefWidth="200.0" progress="0.0" rotate="90.0" styleClass="green-bar" stylesheets="@level_style.css" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="258.0" prefHeight="272.0" prefWidth="0.0" text="PROTAGONIST" textFill="#00ff26" wrapText="true">
+         <font>
+            <Font name="Calibri Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="527.0" prefHeight="250.0" prefWidth="6.0" text="ANTAGONIST" textFill="#ff1300" wrapText="true">
+         <font>
+            <Font name="Calibri Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

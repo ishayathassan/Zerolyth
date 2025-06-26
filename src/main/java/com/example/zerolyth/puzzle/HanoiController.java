@@ -139,6 +139,7 @@ public class HanoiController {
 
             // Notify and close window
             if (onSolved != null) onSolved.run();
+
             ((Stage) block1.getScene().getWindow()).close();
         }
     }

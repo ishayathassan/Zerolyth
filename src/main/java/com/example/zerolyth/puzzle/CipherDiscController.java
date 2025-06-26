@@ -181,7 +181,7 @@ public class CipherDiscController {
                 char upper = Character.toUpperCase(c);
                 int index = upper - 'A';
                 if (index >= 0 && index < 26) {
-                    outerTexts[index].setFill(Color.LIGHTGREEN);
+                    outerTexts[index].setFill(Color.GREENYELLOW);
                 }
             }
         }
@@ -192,7 +192,7 @@ public class CipherDiscController {
                 char upper = Character.toUpperCase(c);
                 int index = upper - 'A';
                 if (index >= 0 && index < 26) {
-                    innerTexts[index].setFill(Color.LIGHTGREEN);
+                    innerTexts[index].setFill(Color.GREENYELLOW);
                 }
             }
         }
@@ -222,7 +222,9 @@ public class CipherDiscController {
             endAlert.setHeaderText("Congratulations!");
             endAlert.setContentText("You have successfully solved the Cipher Disc puzzle.");
             endAlert.showAndWait();
-
+            if (onSolved != null) {
+                onSolved.run();
+            }
             // Close the window after success
             Stage stage = (Stage) puzzlePlaintextInput.getScene().getWindow();
             stage.close();

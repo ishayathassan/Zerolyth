@@ -4,11 +4,16 @@ import com.example.zerolyth.puzzle.CipherDiscController;
 import com.example.zerolyth.puzzle.SimonSaysController;
 import com.example.zerolyth.puzzle.SlidingTilePuzzleController;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -18,6 +23,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import com.example.zerolyth.puzzle.HanoiController;
+
+import javafx.scene.media.AudioClip;
+
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LevelViewController {
 
@@ -32,12 +43,103 @@ public class LevelViewController {
     private int playerRow;
     private int playerCol;
 
+    // Merge Change
+    @FXML private Label hanoiLabel;
+    @FXML private Label simonLabel;
+    @FXML private Label cipherLabel;
+    @FXML private Label slidingLabel;
+    private AudioClip moveSound;
+    private AudioClip puzzleSound;
+
+    private Map<Point, ImageView> collectibleViews = new HashMap<>();
+
+    @FXML private ImageView blueCollectible1;
+    @FXML private ImageView blueCollectible2;
+    @FXML private ImageView blueCollectible3;
+    @FXML private ImageView blueCollectible4;
+    @FXML private ImageView blueCollectible5;
+    @FXML private ImageView goldCollectible1;
+    @FXML private ImageView goldCollectible2;
+    @FXML private ImageView goldCollectible3;
+
+    private final String[] blueImages = {
+            "/collectibles/blue1.png",
+            "/collectibles/blue2.png",
+            "/collectibles/blue3.png",
+            "/collectibles/blue4.png",
+            "/collectibles/blue5.png"
+    };
+
+    private final String[] goldImages = {
+            "/collectibles/gold1.png",
+            "/collectibles/gold2.png",
+            "/collectibles/gold3.png",
+            "/collectibles/gold4.png",
+            "/collectibles/gold5.png",
+            "/collectibles/gold6.png",
+            "/collectibles/gold7.png",
+            "/collectibles/gold8.png"
+    };
+
+    private int blueIndex = 0;
+    private int goldIndex = 0;
+
+    // Changed
+    @FXML private ProgressBar protagonistProgressBar;
+    @FXML private ProgressBar antagonistProgressBar;
+    private void initializeProgressBars() {
+        protagonistProgressBar.setProgress(0);
+        antagonistProgressBar.setProgress(0);
+    }
+    private void sendPuzzleProgressUpdate() {
+        int progress = gameSession.getPlayer().getProgressPercentage();
+        String role = gameSession.getPlayer().getType().name();
+        gameSession.sendProgressUpdate("PROGRESS:" + role + ":" + progress);
+    }
+//    public void handleProgressUpdate(String role, int progress) {
+//        System.out.println("Received progress update - Role: " + role + ", Progress: " + progress + "%");
+//
+//        Platform.runLater(() -> {
+//            if ("PROTAGONIST".equals(role)) {
+//                System.out.println("Updating protagonist progress bar to: " + progress + "%");
+//                protagonistProgressBar.setProgress(progress / 100.0);
+//            } else if ("ANTAGONIST".equals(role)) {
+//                System.out.println("Updating antagonist progress bar to: " + progress + "%");
+//                antagonistProgressBar.setProgress(progress / 100.0);
+//            }
+//        });
+//    }
+    public void handleProgressUpdate(String role, int progress) {
+        System.out.println("Received REMOTE progress update - Role: " + role + ", Progress: " + progress + "%");
+
+        Platform.runLater(() -> {
+            // Only update the OTHER player's progress bar
+            if ("PROTAGONIST".equals(role) && gameSession.getPlayer().getType() == PlayerType.ANTAGONIST) {
+                System.out.println("Updating PROTAGONIST progress bar to: " + progress + "%");
+                protagonistProgressBar.setProgress(progress / 100.0);
+            } else if ("ANTAGONIST".equals(role) && gameSession.getPlayer().getType() == PlayerType.PROTAGONIST) {
+                System.out.println("Updating ANTAGONIST progress bar to: " + progress + "%");
+                antagonistProgressBar.setProgress(progress / 100.0);
+            }
+        });
+    }
+    private void updateLocalProgressBar() {
+        int progress = gameSession.getPlayer().getProgressPercentage();
+        PlayerType type = gameSession.getPlayer().getType();
+
+        if (type == PlayerType.PROTAGONIST) {
+            protagonistProgressBar.setProgress(progress / 100.0);
+        } else {
+            antagonistProgressBar.setProgress(progress / 100.0);
+        }
+
+        System.out.println("Updated LOCAL progress: " + type + " = " + progress + "%");
+    }
+
 
     public void setGameSession(GameSession session) {
         this.gameSession = session;
     }
-
-
 
 
     private void loadPlayerImages() {
@@ -70,7 +172,38 @@ public class LevelViewController {
         fadeOut.play();
     }
     public void initializeLevel() {
+        // Changed
+        System.out.println("Initializing level view");
+        System.out.println("Protagonist progress bar: " + protagonistProgressBar.getProgress());
+        System.out.println("Antagonist progress bar: " + antagonistProgressBar.getProgress());
+        initializeProgressBars();
+
+//        loadPlayerImages();
+//        TileType[][] map = gameSession.getCurrentLevel().getMap();
+//        playerRow = gameSession.getCurrentLevel().getStartRow();
+//        playerCol = gameSession.getCurrentLevel().getStartCol();
+//
+//        playerView = createPlayerView();
+//
+//        StackPane startCell = getCell(playerRow, playerCol);
+//        if (startCell != null) {
+//            startCell.getChildren().add(playerView);
+//        }
+//
+//        grid.setFocusTraversable(true);
+//        grid.requestFocus();
+//        grid.setOnKeyPressed(this::handleKeyPress);
+        // Merge Change
         loadPlayerImages();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(150), e -> animateCollectibles()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+        try {
+            moveSound = new AudioClip(getClass().getResource("/sounds/step_rock.wav").toExternalForm());
+            puzzleSound = new AudioClip(getClass().getResource("/sounds/puzzle.wav").toExternalForm());
+        } catch (Exception e) {
+            System.err.println("Could not load move sound: " + e.getMessage());
+        }
         TileType[][] map = gameSession.getCurrentLevel().getMap();
         playerRow = gameSession.getCurrentLevel().getStartRow();
         playerCol = gameSession.getCurrentLevel().getStartCol();
@@ -81,10 +214,44 @@ public class LevelViewController {
         if (startCell != null) {
             startCell.getChildren().add(playerView);
         }
+        collectibleViews.put(new Point(2, 1), blueCollectible5);
+        collectibleViews.put(new Point(2, 10), goldCollectible3);
+        collectibleViews.put(new Point(6, 8), blueCollectible4);
+        collectibleViews.put(new Point(7, 11), blueCollectible3);
+        collectibleViews.put(new Point(13, 1), goldCollectible2);
+
+        collectibleViews.put(new Point(13, 14), blueCollectible1);
+        collectibleViews.put(new Point(14, 12), blueCollectible2);
+        collectibleViews.put(new Point(17, 1), goldCollectible1);
 
         grid.setFocusTraversable(true);
         grid.requestFocus();
         grid.setOnKeyPressed(this::handleKeyPress);
+    }
+
+    private void removeCollectibleFromMap(int row, int col) {
+        gameSession.getCurrentLevel().getMap()[row][col] = TileType.PATH;
+    }
+
+    private void animateCollectibles() {
+        blueIndex = (blueIndex + 1) % blueImages.length;
+        goldIndex = (goldIndex + 1) % goldImages.length;
+
+        // Animate blue collectibles
+        blueCollectible1.setImage(new Image(getClass().getResourceAsStream(blueImages[blueIndex])));
+        blueCollectible2.setImage(new Image(getClass().getResourceAsStream(blueImages[blueIndex])));
+        blueCollectible3.setImage(new Image(getClass().getResourceAsStream(blueImages[blueIndex])));
+        blueCollectible4.setImage(new Image(getClass().getResourceAsStream(blueImages[blueIndex])));
+        blueCollectible5.setImage(new Image(getClass().getResourceAsStream(blueImages[blueIndex])));
+
+        // Repeat for all blue collectibles
+
+        // Animate gold collectibles
+        goldCollectible1.setImage(new Image(getClass().getResourceAsStream(goldImages[goldIndex])));
+        goldCollectible2.setImage(new Image(getClass().getResourceAsStream(goldImages[goldIndex])));
+        goldCollectible3.setImage(new Image(getClass().getResourceAsStream(goldImages[goldIndex])));
+
+        // Repeat for all gold collectibles
     }
 
     private ImageView createPlayerView() {
@@ -136,6 +303,9 @@ public class LevelViewController {
             case E -> {
                 TileType puzzleType = getAdjacentPuzzleTileType(newRow, newCol);
                 if (puzzleType != null) {
+                    if (puzzleSound != null) {
+                        puzzleSound.play();
+                    }
                     freezeGame();
                     switch (puzzleType) {
                         case HANOI -> showHanoiPuzzle(this::unfreezeGame);
@@ -169,6 +339,8 @@ public class LevelViewController {
             HanoiController hanoiController = loader.getController();
             hanoiController.setOnSolved(() -> {
                 gameSession.getPlayer().setCompletedHanoiPuzzle(true);
+                updateLocalProgressBar(); // Changed
+                sendPuzzleProgressUpdate(); // Changed
                 onComplete.run();
             });
 
@@ -194,6 +366,8 @@ public class LevelViewController {
             SlidingTilePuzzleController slidingController = loader.getController();
             slidingController.setOnSolved(() ->{
                 gameSession.getPlayer().setCompletedSlidingTilePuzzle(true);
+                updateLocalProgressBar(); // Changed
+                sendPuzzleProgressUpdate(); // Changed
                 onComplete.run();
             });
             Stage slidingStage = new Stage();
@@ -219,6 +393,8 @@ public class LevelViewController {
             CipherDiscController controller = loader.getController();
             controller.setOnSolved(() -> {
                 gameSession.getPlayer().setCompletedCipherPuzzle(true);
+                updateLocalProgressBar(); // Changed
+                sendPuzzleProgressUpdate(); // Changed
                 onComplete.run();
             });
 
@@ -245,6 +421,8 @@ public class LevelViewController {
             SimonSaysController controller = loader.getController();
             controller.setOnSolved(() -> {
                 gameSession.getPlayer().setCompletedSimonSaysPuzzle(true);
+                updateLocalProgressBar(); // Changed
+                sendPuzzleProgressUpdate(); // Changed
                 onComplete.run();
             });
 
@@ -285,15 +463,56 @@ public class LevelViewController {
     }
 
     private void updatePlayerPosition(int newRow, int newCol) {
+//        TileType[][] map = gameSession.getCurrentLevel().getMap();
+//
+//        if (map[newRow][newCol] == TileType.COLLECTIBLE) {
+////            gameSession.getPlayer().addScore(10);
+//        }
+//
+//        movePlayerView(newRow, newCol);
+//        playerRow = newRow;
+//        playerCol = newCol;
+        // Merge Change
         TileType[][] map = gameSession.getCurrentLevel().getMap();
-
+        TileType puzzleType = getAdjacentPuzzleTileType(newRow, newCol);
         if (map[newRow][newCol] == TileType.COLLECTIBLE) {
-//            gameSession.getPlayer().addScore(10);
+            System.out.println("Player at: " + newRow + ", " + newCol);
+            Point pos = new Point(newRow, newCol);
+            ImageView collectedView = collectibleViews.get(pos);
+            if (collectedView != null) {
+                System.out.println("Found collectible at: " + pos);
+                collectedView.setVisible(false);
+                collectibleViews.remove(pos);
+            } else {
+                System.out.println("No collectible ImageView found at: " + pos);
+            }
+
+            gameSession.getPlayer().addCollectible();
+            map[newRow][newCol] = TileType.PATH;
+        }
+
+        if (puzzleType == TileType.HANOI) {
+            hanoiLabel.setVisible(true);
+        } else  if (puzzleType == TileType.SIMONSAYS) {
+            simonLabel.setVisible(true);
+        } else if (puzzleType == TileType.CIPHER) {
+            cipherLabel.setVisible(true);
+        } else if (puzzleType == TileType.SLIDING) {
+            slidingLabel.setVisible(true);
+        } else {
+            hanoiLabel.setVisible(false);
+            simonLabel.setVisible(false);
+            cipherLabel.setVisible(false);
+            slidingLabel.setVisible(false);
         }
 
         movePlayerView(newRow, newCol);
         playerRow = newRow;
         playerCol = newCol;
+
+        if (moveSound != null) {
+            moveSound.play();
+        }
     }
 
     private void movePlayerView(int newRow, int newCol) {

@@ -9,7 +9,15 @@ public class Player {
     private boolean completedSimonSaysPuzzle;
     private boolean completedSlidingTilePuzzle;
     private boolean completedCipherPuzzle;
+    private int collectiblesCollected;
 
+    public int getCollectiblesCollected() {
+        return collectiblesCollected;
+    }
+
+    public void addCollectible() {
+        collectiblesCollected++;
+    }
 
     public Player(String name, PlayerType type) {
         this.name = name;
@@ -20,6 +28,16 @@ public class Player {
         this.completedHanoiPuzzle = false;
         this.completedSimonSaysPuzzle = false;
         this.completedSlidingTilePuzzle = false;
+    }
+
+    // Changed
+    public int getProgressPercentage() {
+        int completed = 0;
+        if (completedHanoiPuzzle) completed++;
+        if (completedSimonSaysPuzzle) completed++;
+        if (completedSlidingTilePuzzle) completed++;
+        if (completedCipherPuzzle) completed++;
+        return completed * 25; // 25% per puzzle
     }
 
     public boolean isCompletedHanoiPuzzle() {

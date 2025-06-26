@@ -1,17 +1,17 @@
 package com.example.zerolyth;
 
-class GameSession {
+public class GameSession {
     private Player player;
     private Level currentLevel;
+    private GameClient gameClient;
 
-    public GameSession(Player player, Level level) {
+    public GameSession(Player player, Level level, GameClient gameClient) {
         this.player = player;
         this.currentLevel = level;
+        this.gameClient = gameClient;
 
-        // TODO: Initialize puzzles for this level
+        // Future support for initializing puzzles/cutscenes can be added here
         // this.currentLevel.setPuzzles(PuzzleLoader.loadForLevel(level));
-
-        // TODO: Initialize cutscenes for this level
         // CutsceneManager.loadIntroCutscene(level);
     }
 
@@ -22,4 +22,25 @@ class GameSession {
     public Level getCurrentLevel() {
         return currentLevel;
     }
+
+    public GameClient getGameClient() {
+        return gameClient;
+    }
+
+    /**
+     * Sends a progress update to the server (called from LevelViewController or puzzle controllers).
+     */
+//    public void sendProgressUpdate(String progressMessage) {
+//        if (gameClient != null) {
+//            gameClient.sendMessage("PROGRESS:" + progressMessage);
+//        }
+//    }
+
+    //Changed
+    public void sendProgressUpdate(String progressMessage) {
+        if (gameClient != null) {
+            gameClient.sendMessage(progressMessage);
+        }
+    }
+
 }

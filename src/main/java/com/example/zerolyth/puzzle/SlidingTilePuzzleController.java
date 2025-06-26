@@ -62,23 +62,47 @@ public class SlidingTilePuzzleController {
         scrambleBoard();
     }
 
+//    private void scrambleBoard() {
+//        List<Integer> indices = new ArrayList<>();
+//        for (int i = 0; i < 9; i++) indices.add(i); // 0-8
+//        Collections.shuffle(indices);
+//
+//        int idx = 0;
+//        for (int r = 0; r < 3; r++) {
+//            for (int c = 0; c < 3; c++) {
+//                int shuffledIdx = indices.get(idx++);
+//                if (shuffledIdx == 8) { // empty tile
+//                    tiles[r][c] = 0;
+//                    imagePaths[r][c] = "";
+//                    emptyRow = r;
+//                    emptyCol = c;
+//                } else {
+//                    tiles[r][c] = shuffledIdx + 1;
+//                    imagePaths[r][c] = solvedImagePaths[shuffledIdx];
+//                }
+//                setButtonImage(buttons[r][c], imagePaths[r][c]);
+//            }
+//        }
+//        rebindActions();
+//    }
+
     private void scrambleBoard() {
         List<Integer> indices = new ArrayList<>();
-        for (int i = 0; i < 9; i++) indices.add(i); // 0-8
+        for (int i = 0; i < 8; i++) indices.add(i + 1); // 1-8 (exclude 0 for empty tile)
         Collections.shuffle(indices);
 
         int idx = 0;
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
-                int shuffledIdx = indices.get(idx++);
-                if (shuffledIdx == 8) { // empty tile
+                if (r == 2 && c == 2) { // Set the empty tile at (2, 2)
                     tiles[r][c] = 0;
                     imagePaths[r][c] = "";
                     emptyRow = r;
                     emptyCol = c;
                 } else {
-                    tiles[r][c] = shuffledIdx + 1;
-                    imagePaths[r][c] = solvedImagePaths[shuffledIdx];
+                    int shuffledIdx = indices.get(idx++);
+                    tiles[r][c] = shuffledIdx;
+                    imagePaths[r][c] = solvedImagePaths[shuffledIdx - 1];
                 }
                 setButtonImage(buttons[r][c], imagePaths[r][c]);
             }
@@ -157,7 +181,9 @@ public class SlidingTilePuzzleController {
         winAlert.setHeaderText("Congratulations!");
         winAlert.setContentText("You solved the sliding tile puzzle!");
         winAlert.showAndWait();
-
+        if (onSolved != null) {
+            onSolved.run();
+        }
         // Optionally close the window if needed:
         // ((Stage) btn00.getScene().getWindow()).close();
     }
