@@ -12,7 +12,7 @@ public class GameApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Player player = new Player("Player 1", PlayerType.ANTAGONIST);
+        Player player = new Player("Player 1", PlayerType.PROTAGONIST);
 
         // Load level from text file
         Level level = LevelLoader.loadFromFile("levels/level_test.txt");

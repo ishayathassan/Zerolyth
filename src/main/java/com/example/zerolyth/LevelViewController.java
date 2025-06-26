@@ -159,11 +159,18 @@ public class LevelViewController {
         }
     }
     private void showHanoiPuzzle(Runnable onComplete) {
+        if (gameSession.getPlayer().isCompletedHanoiPuzzle()) {
+            onComplete.run();
+            return;
+        }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/zerolyth/puzzles/tower.fxml"));
             Parent hanoiRoot = loader.load();
             HanoiController hanoiController = loader.getController();
-            hanoiController.setOnSolved(onComplete);
+            hanoiController.setOnSolved(() -> {
+                gameSession.getPlayer().setCompletedHanoiPuzzle(true);
+                onComplete.run();
+            });
 
             Stage hanoiStage = new Stage();
             hanoiStage.setTitle("Hanoi Puzzle");
@@ -177,13 +184,18 @@ public class LevelViewController {
         }
     }
     private void showSlidingPuzzle(Runnable onComplete) {
+        if (gameSession.getPlayer().isCompletedSlidingTilePuzzle()) {
+            onComplete.run();
+            return;
+        }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/zerolyth/puzzles/sliding_puzzle.fxml"));
             Parent slidingRoot = loader.load();
             SlidingTilePuzzleController slidingController = loader.getController();
-            slidingController.setOnSolved(onComplete); // Set the callback for when the puzzle is solved
-
-
+            slidingController.setOnSolved(() ->{
+                gameSession.getPlayer().setCompletedSlidingTilePuzzle(true);
+                onComplete.run();
+            });
             Stage slidingStage = new Stage();
             slidingStage.setTitle("Sliding Tile Puzzle");
             slidingStage.setScene(new javafx.scene.Scene(slidingRoot));
@@ -197,13 +209,18 @@ public class LevelViewController {
     }
 
     private void showCipherPuzzle(Runnable onComplete) {
+        if(gameSession.getPlayer().isCompletedCipherPuzzle()){
+            onComplete.run();
+            return;
+        }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/zerolyth/puzzles/caesar_cipher.fxml"));
             Parent root = loader.load();
-
-            // Optionally set a callback for when the puzzle is solved
             CipherDiscController controller = loader.getController();
-            controller.setOnSolved(onComplete); // Uncomment if you add this to the controller
+            controller.setOnSolved(() -> {
+                gameSession.getPlayer().setCompletedCipherPuzzle(true);
+                onComplete.run();
+            });
 
             Stage stage = new Stage();
             stage.setTitle("Cipher Disc Puzzle");
@@ -217,12 +234,19 @@ public class LevelViewController {
         }
     }
 
-    public static void showSimonSaysPuzzle(Runnable onComplete) {
+    private void showSimonSaysPuzzle(Runnable onComplete) {
+        if (gameSession.getPlayer().isCompletedSimonSaysPuzzle()) {
+            onComplete.run();
+            return;
+        }
         try {
             FXMLLoader loader = new FXMLLoader(LevelLoader.class.getResource("/com/example/zerolyth/puzzles/simon_says.fxml"));
             Parent root = loader.load();
             SimonSaysController controller = loader.getController();
-            controller.setOnSolved(onComplete); // Set the callback for when the puzzle is solved
+            controller.setOnSolved(() -> {
+                gameSession.getPlayer().setCompletedSimonSaysPuzzle(true);
+                onComplete.run();
+            });
 
             Stage stage = new Stage();
             stage.setTitle("Simon Says Puzzle");

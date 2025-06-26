@@ -5,6 +5,10 @@ public class Player {
     private PlayerType type;
     private int health;
     private int score;
+    private boolean completedHanoiPuzzle;
+    private boolean completedSimonSaysPuzzle;
+    private boolean completedSlidingTilePuzzle;
+    private boolean completedCipherPuzzle;
 
 
     public Player(String name, PlayerType type) {
@@ -12,6 +16,42 @@ public class Player {
         this.type = type;
         this.health = 100;
         this.score = 0;
+        this.completedCipherPuzzle = false;
+        this.completedHanoiPuzzle = false;
+        this.completedSimonSaysPuzzle = false;
+        this.completedSlidingTilePuzzle = false;
+    }
+
+    public boolean isCompletedHanoiPuzzle() {
+        return completedHanoiPuzzle;
+    }
+
+    public boolean isCompletedSimonSaysPuzzle() {
+        return completedSimonSaysPuzzle;
+    }
+
+    public boolean isCompletedSlidingTilePuzzle() {
+        return completedSlidingTilePuzzle;
+    }
+
+    public boolean isCompletedCipherPuzzle() {
+        return completedCipherPuzzle;
+    }
+
+    public void setCompletedHanoiPuzzle(boolean completedHanoiPuzzle) {
+        this.completedHanoiPuzzle = completedHanoiPuzzle;
+    }
+
+    public void setCompletedSimonSaysPuzzle(boolean completedSimonSaysPuzzle) {
+        this.completedSimonSaysPuzzle = completedSimonSaysPuzzle;
+    }
+
+    public void setCompletedSlidingTilePuzzle(boolean completedSlidingTilePuzzle) {
+        this.completedSlidingTilePuzzle = completedSlidingTilePuzzle;
+    }
+
+    public void setCompletedCipherPuzzle(boolean completedCipherPuzzle) {
+        this.completedCipherPuzzle = completedCipherPuzzle;
     }
 
     public String getName() {
