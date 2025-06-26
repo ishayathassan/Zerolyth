@@ -4,9 +4,12 @@ public enum TileType {
     PATH,
     WALL,
     COLLECTIBLE,
-    DOOR,
     EXIT,
     ENEMY,
-    ENVIRONMENT;
+    ENVIRONMENT,
+    HANOI,        // 10
+    SIMONSAYS,    // 11
+    CIPHER,       // 12
+    SLIDING       // 13
 
 }

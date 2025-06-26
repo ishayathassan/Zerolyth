@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.util.Random;
 
@@ -22,6 +23,8 @@ public class CipherDiscController {
     @FXML private Label hintCiphertextLabel;
     @FXML private Label puzzleCiphertextLabel;
     @FXML private TextField puzzlePlaintextInput;
+    private Runnable onSolved;
+
 
 
     private int currentShift = 0; // Current disc shift
@@ -54,10 +57,15 @@ public class CipherDiscController {
         //outerLetters.setStyle("-fx-fill: white;");
         //innerLetters.setStyle("-fx-fill: white;");
         Platform.runLater(() -> {
+            Alert startAlert = new Alert(Alert.AlertType.INFORMATION);
+            startAlert.setTitle("Cipher Disc Puzzle");
+            startAlert.setHeaderText("Cipher Disc Challenge");
+            startAlert.setContentText("Decrypt the ciphertext using the cipher disc. Rotate the disc and enter your answer below.");
+            startAlert.showAndWait();
+
             drawLetters();
             highlightLetters();
         });
-
         // Generate random shift between 1-25
         Random random = new Random();
         encryptionShift = random.nextInt(25) + 1;
@@ -75,7 +83,9 @@ public class CipherDiscController {
         drawLetters();
         highlightLetters();
     }
-
+    public void setOnSolved(Runnable onSolved) {
+        this.onSolved = onSolved;
+    }
     // Caesar cipher encryption method
     private String encrypt(String plaintext, int shift) {
         StringBuilder ciphertext = new StringBuilder();
@@ -207,6 +217,15 @@ public class CipherDiscController {
 
         if (userInput.equalsIgnoreCase(expectedPlaintext)) {
             showAlert("Correct!", "Your decryption is correct!", Alert.AlertType.INFORMATION);
+            Alert endAlert = new Alert(Alert.AlertType.INFORMATION);
+            endAlert.setTitle("Puzzle Solved");
+            endAlert.setHeaderText("Congratulations!");
+            endAlert.setContentText("You have successfully solved the Cipher Disc puzzle.");
+            endAlert.showAndWait();
+
+            // Close the window after success
+            Stage stage = (Stage) puzzlePlaintextInput.getScene().getWindow();
+            stage.close();
         } else {
             showAlert("Incorrect", "Try again! The correct answer is: " + expectedPlaintext,
                     Alert.AlertType.WARNING);

@@ -1,6 +1,7 @@
 package com.example.zerolyth.puzzle;
 
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -35,12 +36,13 @@ public class HanoiController {
 
     @FXML
     public void initialize() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Hanoi Puzzle");
-        alert.setHeaderText("Tower of Hanoi");
-        alert.setContentText("These ancient stones must be moved carefully.\n" +
-                "Rebuild the stack on the final pillar to unlock your path.");
-        alert.showAndWait();
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Hanoi Puzzle");
+            alert.setHeaderText("Tower of Hanoi");
+            alert.setContentText("Move all blocks to the rightmost tower.\nYou can only move one block at a time, and never place a larger block on a smaller one.");
+            alert.showAndWait();
+        });
 
         // Add blocks to tower1: bottom (eagle) to top (frog)
         tower1.push(block3); // eagle (largest)

@@ -1,11 +1,14 @@
 package com.example.zerolyth.puzzle;
 
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.*;
@@ -24,6 +27,7 @@ public class SimonSaysController {
 
     @FXML private Label statusLabel;
     @FXML private Button startButton;
+    private Runnable onSolved;
 
 
     private List<ImageView> tiles;
@@ -31,6 +35,8 @@ public class SimonSaysController {
     private List<Integer> playerInput = new ArrayList<>();
     private Random random = new Random();
     private boolean playerTurn = false;
+    private int currentRound = 1;
+    private static final int MAX_ROUNDS = 3;
 
     @FXML
     public void initialize() {
@@ -51,27 +57,31 @@ public class SimonSaysController {
 
         startNewGame();
     }
-
-
+    public void setOnSolved(Runnable onSolved) {
+        this.onSolved = onSolved;
+    }
     private void startNewGame() {
+        currentRound = 1;
         sequence.clear();
         playerInput.clear();
-        statusLabel.setText("🌟 Welcome to the temple. Press Start Round.");
+        statusLabel.setText("🌟 Welcome to Simon Says! Press Start to begin Round 1.");
+        startButton.setText("Start");
         startButton.setVisible(true);
+
+        Platform.runLater(() -> {
+            Alert startAlert = new Alert(Alert.AlertType.INFORMATION);
+            startAlert.setTitle("Simon Says Puzzle");
+            startAlert.setHeaderText("Simon Says Challenge");
+            startAlert.setContentText("Repeat the sequence for 3 rounds to win. If you fail, you'll start over!");
+            startAlert.showAndWait();
+        });
     }
+
     private void startRound() {
+        statusLabel.setText("📜 Round " + currentRound + ": Watch closely...");
         startButton.setVisible(false);
-        statusLabel.setText("📜 Watch closely...");
         sequence.add(random.nextInt(4));
         playerInput.clear();
-        playSequence();
-    }
-
-
-    private void addNextInSequence() {
-        sequence.add(random.nextInt(4));
-        playerInput.clear();
-        System.out.println("📜 New Sequence Length: " + sequence.size());
         playSequence();
     }
 
@@ -83,12 +93,8 @@ public class SimonSaysController {
             ImageView tile = tiles.get(index);
 
             double delay = i * 1.0;
-            KeyFrame on = new KeyFrame(Duration.seconds(delay), e -> {
-                System.out.println("🔆 Showing tile: " + index);
-                highlightTile(tile);
-            });
+            KeyFrame on = new KeyFrame(Duration.seconds(delay), e -> highlightTile(tile));
             KeyFrame off = new KeyFrame(Duration.seconds(delay + 0.5), e -> unhighlightTile(tile));
-
 
             timeline.getKeyFrames().addAll(on, off);
         }
@@ -99,20 +105,17 @@ public class SimonSaysController {
             playerTurn = true;
         });
 
-
         timeline.play();
     }
 
     private void handlePlayerInput(int index) {
         if (!playerTurn || playerInput.size() >= sequence.size()) return;
 
-        System.out.println("✅ Clicked: " + index);
         ImageView tile = tiles.get(index);
         highlightTile(tile);
 
         PauseTransition pt = new PauseTransition(Duration.seconds(0.3));
         pt.setOnFinished(e -> unhighlightTile(tile));
-
         pt.play();
 
         playerInput.add(index);
@@ -122,18 +125,45 @@ public class SimonSaysController {
     private void checkPlayerProgress() {
         int current = playerInput.size() - 1;
         if (!playerInput.get(current).equals(sequence.get(current))) {
-            statusLabel.setText("❌ Wrong! Game Over.");
+            statusLabel.setText("❌ Wrong! Starting over from Round 1.");
             startButton.setText("Restart");
             startButton.setVisible(true);
             playerTurn = false;
+            Platform.runLater(() -> {
+                Alert failAlert = new Alert(Alert.AlertType.WARNING);
+                failAlert.setTitle("Simon Says Puzzle");
+                failAlert.setHeaderText("Incorrect Sequence");
+                failAlert.setContentText("You made a mistake! The game will restart from Round 1.");
+                failAlert.showAndWait();
+                startNewGame();
+            });
             return;
         }
 
         if (playerInput.size() == sequence.size()) {
-            statusLabel.setText("✅ Correct! Press Start for next round.");
-            startButton.setText("Start Round");
-            startButton.setVisible(true);
             playerTurn = false;
+            if (currentRound == MAX_ROUNDS) {
+                statusLabel.setText("🏆 You won! Congratulations!");
+                Platform.runLater(() -> {
+                    Alert winAlert = new Alert(Alert.AlertType.INFORMATION);
+                    winAlert.setTitle("Simon Says Puzzle");
+                    winAlert.setHeaderText("Congratulations!");
+                    winAlert.setContentText("You have successfully completed all 3 rounds of Simon Says!");
+                    winAlert.showAndWait();
+                    // Close the window and notify parent
+                    Node node = statusLabel.getScene().getRoot();
+                    Stage stage = (Stage) node.getScene().getWindow();
+                    stage.close();
+                    if (onSolved != null) {
+                        onSolved.run();
+                    }
+                });
+            } else {
+                currentRound++;
+                statusLabel.setText("✅ Correct! Press Start for Round " + currentRound + ".");
+                startButton.setText("Start Round " + currentRound);
+                startButton.setVisible(true);
+            }
         }
     }
 

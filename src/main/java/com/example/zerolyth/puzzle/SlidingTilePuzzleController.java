@@ -1,6 +1,8 @@
 package com.example.zerolyth.puzzle;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,9 +22,22 @@ public class SlidingTilePuzzleController {
     private String[] solvedImagePaths; // correct order
     private int emptyRow;
     private int emptyCol;
+    private Runnable onSolved;
+
+
+    public void setOnSolved(Runnable onSolved) {
+        this.onSolved = onSolved;
+    }
 
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sliding Tile Puzzle");
+            alert.setHeaderText("Knight's Sliding Puzzle");
+            alert.setContentText("Arrange the tiles to form the correct image.\nClick tiles adjacent to the empty space to move them.");
+            alert.showAndWait();
+        });
         buttons = new Button[][]{
                 {btn00, btn01, btn02},
                 {btn10, btn11, btn12},
@@ -135,5 +150,15 @@ public class SlidingTilePuzzleController {
             }
         }
         System.out.println("🎉 You won!");
+
+        // Show win alert
+        Alert winAlert = new Alert(Alert.AlertType.INFORMATION);
+        winAlert.setTitle("Puzzle Solved!");
+        winAlert.setHeaderText("Congratulations!");
+        winAlert.setContentText("You solved the sliding tile puzzle!");
+        winAlert.showAndWait();
+
+        // Optionally close the window if needed:
+        // ((Stage) btn00.getScene().getWindow()).close();
     }
 }
