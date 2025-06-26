@@ -1,5 +1,6 @@
 package com.example.zerolyth.puzzle;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Alert;
@@ -25,10 +26,17 @@ public class CipherDiscController {
 
     private int currentShift = 0; // Current disc shift
     private int encryptionShift;  // Random shift used for encryption
-    private final double centerX = 300;
-    private final double centerY = 300;
-    private final double outerRadius = 200;
-    private final double innerRadius = 160;
+//    private final double centerX = 300;
+//    private final double centerY = 300;
+//    private final double outerRadius = 200;
+//    private final double innerRadius = 160;
+
+    // Change these constants to match your background image
+    private final double centerX = 254; // Image center X: 50 + 490/2 = 295
+    private final double centerY = 413; // Image center Y: 24 + 490/2 = 269
+    private final double outerRadius = 182; // Adjust based on image
+    private final double innerRadius = 127; // Adjust based on image
+
     private final Font boldFont = Font.font("System", FontWeight.BOLD, 14);
     private Text[] innerTexts = new Text[26];
     private Text[] outerTexts = new Text[26];
@@ -43,6 +51,13 @@ public class CipherDiscController {
 
     @FXML
     public void initialize() {
+        //outerLetters.setStyle("-fx-fill: white;");
+        //innerLetters.setStyle("-fx-fill: white;");
+        Platform.runLater(() -> {
+            drawLetters();
+            highlightLetters();
+        });
+
         // Generate random shift between 1-25
         Random random = new Random();
         encryptionShift = random.nextInt(25) + 1;
@@ -52,8 +67,8 @@ public class CipherDiscController {
         puzzleCiphertext = encrypt(puzzlePlaintext, encryptionShift);
 
         // Set labels
-        hintPlaintextLabel.setText("Plaintext: " + hintPlaintext);
-        hintCiphertextLabel.setText("Ciphertext: " + hintCiphertext);
+        hintPlaintextLabel.setText("Plaintext: " + hintPlaintext + " (OC)");
+        hintCiphertextLabel.setText("Ciphertext: " + hintCiphertext + " (IC)");
         puzzleCiphertextLabel.setText("\"" + puzzleCiphertext + "\"");
 
         // Draw cipher disc
@@ -103,9 +118,13 @@ public class CipherDiscController {
             double xOuter = centerX + outerRadius * Math.cos(angle);
             double yOuter = centerY + outerRadius * Math.sin(angle);
             Text textOuter = new Text(xOuter, yOuter, letter);
-            textOuter.setFont(boldFont);
+            textOuter.setFont(Font.font("Papyrus", FontWeight.EXTRA_BOLD, 24));
+            textOuter.setFill(Color.WHITE);
+//            textOuter.setX(xOuter - textOuter.getLayoutBounds().getWidth() / 2);
+//            textOuter.setY(yOuter + textOuter.getLayoutBounds().getHeight() / 4);
+            // For outer letters:
             textOuter.setX(xOuter - textOuter.getLayoutBounds().getWidth() / 2);
-            textOuter.setY(yOuter + textOuter.getLayoutBounds().getHeight() / 4);
+            textOuter.setY(yOuter + textOuter.getLayoutBounds().getHeight() / 3); // Changed from /4 to /3
             outerLetters.getChildren().add(textOuter);
             outerTexts[i] = textOuter;
 
@@ -113,7 +132,11 @@ public class CipherDiscController {
             double xInner = centerX + innerRadius * Math.cos(angle);
             double yInner = centerY + innerRadius * Math.sin(angle);
             Text textInner = new Text(xInner, yInner, letter);
-            textInner.setFont(boldFont);
+            textInner.setFont(Font.font("Papyrus", FontWeight.EXTRA_BOLD, 20));
+            textInner.setFill(Color.WHITE);
+            // For inner letters:
+            textInner.setX(xInner - textInner.getLayoutBounds().getWidth() / 2);
+            textInner.setY(yInner + textInner.getLayoutBounds().getHeight() / 3); // Changed from /4 to /3
             innerTexts[i] = textInner;
             innerLetters.getChildren().add(textInner);
         }
@@ -136,10 +159,10 @@ public class CipherDiscController {
     private void highlightLetters() {
         // Reset all to black first
         for (Text text : outerTexts) {
-            text.setFill(Color.BLACK);
+            text.setFill(Color.WHITE);
         }
         for (Text text : innerTexts) {
-            text.setFill(Color.BLACK);
+            text.setFill(Color.WHITE);
         }
 
         // Highlight hint plaintext letters in outer circle (RED)
@@ -148,7 +171,7 @@ public class CipherDiscController {
                 char upper = Character.toUpperCase(c);
                 int index = upper - 'A';
                 if (index >= 0 && index < 26) {
-                    outerTexts[index].setFill(Color.RED);
+                    outerTexts[index].setFill(Color.LIGHTGREEN);
                 }
             }
         }
@@ -159,7 +182,7 @@ public class CipherDiscController {
                 char upper = Character.toUpperCase(c);
                 int index = upper - 'A';
                 if (index >= 0 && index < 26) {
-                    innerTexts[index].setFill(Color.RED);
+                    innerTexts[index].setFill(Color.LIGHTGREEN);
                 }
             }
         }

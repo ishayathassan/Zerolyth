@@ -5,30 +5,35 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane style="-fx-background-color: #2E6F40;" prefHeight="735.0" prefWidth="981.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.zerolyth.puzzle.HanoiController">
+<AnchorPane prefHeight="680.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.zerolyth.puzzle.HanoiController">
     <children>
+      <ImageView fitHeight="680.0" fitWidth="1020.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@tower.png" />
+         </image>
+      </ImageView>
         <!-- Tower Drop Areas (transparent) -->
-        <Pane fx:id="towerPane1" layoutX="78.0" layoutY="55.0" prefHeight="575.0" prefWidth="200.0">
+        <Pane fx:id="towerPane1" layoutX="102.0" layoutY="28.0" prefHeight="575.0" prefWidth="200.0">
             <children>
-                <ImageView fitHeight="62.5" fitWidth="200.0" layoutY="512.0" preserveRatio="true">
+                <ImageView fitHeight="62.5" fitWidth="200.0" layoutY="512.0" preserveRatio="true" visible="false">
                     <image>
                         <Image url="@../assets/platform.png" />
                     </image>
                 </ImageView>
             </children>
         </Pane>
-        <Pane fx:id="towerPane2" layoutX="380.0" layoutY="55.0" prefHeight="575.0" prefWidth="200.0">
+        <Pane fx:id="towerPane2" layoutX="392.0" layoutY="28.0" prefHeight="575.0" prefWidth="200.0">
             <children>
-                <ImageView fitHeight="62.5" fitWidth="200.0" layoutY="512.0" preserveRatio="true">
+                <ImageView fitHeight="62.5" fitWidth="200.0" layoutY="512.0" preserveRatio="true" visible="false">
                     <image>
                         <Image url="@../assets/platform.png" />
                     </image>
                 </ImageView>
             </children>
         </Pane>
-        <Pane fx:id="towerPane3" layoutX="665.0" layoutY="55.0" prefHeight="575.0" prefWidth="200.0">
+        <Pane fx:id="towerPane3" layoutX="694.0" layoutY="28.0" prefHeight="575.0" prefWidth="200.0">
             <children>
-                <ImageView fitHeight="62.5" fitWidth="200.0" layoutY="512.0" preserveRatio="true">
+                <ImageView fitHeight="62.5" fitWidth="200.0" layoutY="512.0" preserveRatio="true" visible="false">
                     <image>
                         <Image url="@../assets/platform.png" />
                     </image>
@@ -38,7 +43,7 @@
         <!-- Blocks as direct children of AnchorPane -->
         <ImageView fx:id="block3" fitHeight="130.0" fitWidth="130.0" preserveRatio="true">
             <image>
-                <Image url="@../assets/eagle.png" />
+                <Image url="@../assets/frog.png" />
             </image>
         </ImageView>
         <ImageView fx:id="block2" fitHeight="130.0" fitWidth="110.0" preserveRatio="true">
@@ -48,7 +53,7 @@
         </ImageView>
         <ImageView fx:id="block1" fitHeight="130.0" fitWidth="90.0" preserveRatio="true">
             <image>
-                <Image url="@../assets/frog.png" />
+                <Image url="@../assets/eagle.png" />
             </image>
         </ImageView>
     </children>

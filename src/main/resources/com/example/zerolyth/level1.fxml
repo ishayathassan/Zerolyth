@@ -8,13 +8,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1056.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.zerolyth.LevelViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1056.0" prefWidth="968.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.zerolyth.LevelViewController">
    <children>
-      <ImageView fitHeight="1056.0" fitWidth="768.0" pickOnBounds="true">
+      <ImageView fitHeight="1056.0" fitWidth="968.0" pickOnBounds="true">
          <image>
-            <Image url="@assets/background_768x1056.png" />
-         </image></ImageView>
-      <GridPane fx:id="grid" gridLinesVisible="true" prefHeight="1056.0" prefWidth="768.0">
+            <Image url="@assets/background2_768x1156.png" />
+         </image>
+      </ImageView>
+      <GridPane fx:id="grid" layoutX="100.0" prefHeight="1056.0" prefWidth="768.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -278,6 +279,11 @@
                      <image>
                         <Image url="@assets/wall5.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateY="-20.0">
+                     <image>
+                        <Image url="@assets/direction2.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -301,6 +307,11 @@
                      <image>
                         <Image url="@assets/side_wall4.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass2.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -337,9 +348,9 @@
                      <image>
                         <Image url="@assets/wall6.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" translateY="-25.0">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="1.5" scaleY="1.5" translateY="-22.0">
                      <image>
-                        <Image url="@assets/tree1.png" />
+                        <Image url="@assets/pillar.png" />
                      </image>
                   </ImageView>
                </children>
@@ -557,6 +568,11 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <children>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/flower4.png" />
+                     </image>
+                  </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="270.0">
                      <image>
                         <Image url="@assets/side_wall4.png" />
@@ -588,6 +604,11 @@
                      <image>
                         <Image url="@assets/corner_wall.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/stone2.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -781,6 +802,11 @@
                      <image>
                         <Image url="@assets/side_wall4.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -808,6 +834,11 @@
                      <image>
                         <Image url="@assets/side_wall1.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/plant.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -908,7 +939,7 @@
                      <image>
                         <Image url="@assets/wall4.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" translateY="-14.0">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" translateY="-18.0">
                      <image>
                         <Image url="@assets/statue.png" />
                      </image></ImageView>
@@ -944,7 +975,7 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="8" GridPane.rowIndex="5">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                      <image>
                         <Image url="@assets/wall4.png" />
                      </image></ImageView>
@@ -957,6 +988,11 @@
                      <image>
                         <Image url="@assets/side_wall4.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/side_wall4.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -966,6 +1002,11 @@
                      <image>
                         <Image url="@assets/corner_wall.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -993,11 +1034,6 @@
                      <image>
                         <Image url="@assets/wall1.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@assets/plant.png" />
-                     </image>
-                  </ImageView>
                </children>
             </StackPane>
 
@@ -1026,7 +1062,10 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="0" GridPane.rowIndex="6">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" translateX="15.0" translateY="-35.0">
+                     <image>
+                        <Image url="@assets/plant2.png" />
+                     </image></ImageView>
                </children>
             </StackPane>
 
@@ -1089,6 +1128,11 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
                <children>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="-15.0">
+                     <image>
+                        <Image url="@assets/flower2.png" />
+                     </image>
+                  </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                      <image>
                         <Image url="@assets/side_wall3.png" />
@@ -1161,6 +1205,11 @@
                      <image>
                         <Image url="@assets/side_wall2.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="10.0" translateY="-20.0">
+                     <image>
+                        <Image url="@assets/drum.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1173,10 +1222,22 @@
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="0" GridPane.rowIndex="7">
                <children>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass2.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
-            <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <children>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" translateX="15.0" translateY="-25.0">
+                     <image>
+                        <Image url="@assets/tree1.png" />
+                     </image>
+                  </ImageView>
+               </children></StackPane>
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
                <children>
@@ -1252,7 +1313,7 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="10" GridPane.rowIndex="7">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="270.0">
                      <image>
                         <Image url="@assets/wall4.png" />
                      </image></ImageView>
@@ -1293,11 +1354,21 @@
                         <Image url="@assets/side_wall2.png" />
                      </image>
                   </ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="10.0" translateY="-20.0">
+                     <image>
+                        <Image url="@assets/stone3.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="14" GridPane.rowIndex="7">
                <children>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="10.0" translateY="10.0">
+                     <image>
+                        <Image url="@assets/flower4.png" />
+                     </image>
+                  </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                      <image>
                         <Image url="@assets/corner_wall.png" />
@@ -1308,6 +1379,11 @@
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="15" GridPane.rowIndex="7">
                <children>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1335,6 +1411,11 @@
                      <image>
                         <Image url="@assets/corner_wall.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1344,6 +1425,11 @@
                      <image>
                         <Image url="@assets/side_wall4.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="-8.0" translateY="-16.0">
+                     <image>
+                        <Image url="@assets/square_stone.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1368,6 +1454,11 @@
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="6" GridPane.rowIndex="8">
                <children>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1377,6 +1468,11 @@
                      <image>
                         <Image url="@assets/side_wall4.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/stone3.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1404,6 +1500,11 @@
                      <image>
                         <Image url="@assets/wall4.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/stone.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1464,11 +1565,6 @@
                      <image>
                         <Image url="@assets/wall5.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" translateY="-25.0">
-                     <image>
-                        <Image url="@assets/tree1.png" />
-                     </image>
-                  </ImageView>
                </children>
             </StackPane>
 
@@ -1514,6 +1610,11 @@
                      <image>
                         <Image url="@assets/side_wall4.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" translateX="10.0" translateY="-55.0">
+                     <image>
+                        <Image url="@assets/tree2.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1596,6 +1697,11 @@
                      <image>
                         <Image url="@assets/corner_wall2.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1632,14 +1738,14 @@
                      <image>
                         <Image url="@assets/wall2.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateY="-25.0">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="1.25" scaleY="1.25" translateY="-25.0">
                      <image>
                         <Image url="@assets/laserstone.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" translateY="-30.0">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="2.3" scaleY="2.3" translateX="1.0" translateY="-21.0">
                      <image>
-                        <Image url="@assets/puzzle_active.png" />
+                        <Image url="@assets/puzzle_active2.png" />
                      </image>
                   </ImageView>
                </children>
@@ -1683,7 +1789,7 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="7" GridPane.rowIndex="10">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                      <image>
                         <Image url="@assets/wall4.png" />
                      </image></ImageView>
@@ -1705,6 +1811,11 @@
                      <image>
                         <Image url="@assets/side_wall4.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass2.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1729,6 +1840,11 @@
                      <image>
                         <Image url="@assets/wall2.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateY="-15.0">
+                     <image>
+                        <Image url="@assets/bench.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1862,6 +1978,11 @@
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="10" GridPane.rowIndex="11">
                <children>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" translateY="-25.0">
+                     <image>
+                        <Image url="@assets/tree1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1897,7 +2018,8 @@
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/wall1.png" />
-                     </image></ImageView>
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1962,6 +2084,11 @@
                         <Image url="@assets/side_wall2.png" />
                      </image>
                   </ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/plant.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -1994,7 +2121,7 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="8" GridPane.rowIndex="12">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                      <image>
                         <Image url="@assets/wall4.png" />
                      </image></ImageView>
@@ -2007,6 +2134,11 @@
                      <image>
                         <Image url="@assets/corner_wall2.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="10.0" translateY="-15.0">
+                     <image>
+                        <Image url="@assets/stone3.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2025,6 +2157,11 @@
                      <image>
                         <Image url="@assets/corner_wall2.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2039,6 +2176,11 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="13" GridPane.rowIndex="12">
                <children>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/side_wall5.png" />
+                     </image>
+                  </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/corner_wall2.png" />
@@ -2116,6 +2258,11 @@
                      <image>
                         <Image url="@assets/corner_wall2.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2125,11 +2272,6 @@
                      <image>
                         <Image url="@assets/wall2.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@assets/plant.png" />
-                     </image>
-                  </ImageView>
                </children>
             </StackPane>
 
@@ -2139,6 +2281,11 @@
                      <image>
                         <Image url="@assets/wall4.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateY="-15.0">
+                     <image>
+                        <Image url="@assets/bench.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2175,6 +2322,16 @@
                      <image>
                         <Image url="@assets/wall2.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" scaleX="2.0" scaleY="2.0" translateX="-25.0">
+                     <image>
+                        <Image url="@assets/Stone Ground1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="-25.0" translateY="-5.0">
+                     <image>
+                        <Image url="@assets/box.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2234,6 +2391,11 @@
                      <image>
                         <Image url="@assets/side_wall1.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/stone2.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2266,7 +2428,7 @@
                      <image>
                         <Image url="@assets/wall2.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.2">
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.2" translateY="-5.0">
                      <image>
                         <Image url="@assets/collectibles.png" />
                      </image>
@@ -2316,16 +2478,6 @@
                      <image>
                         <Image url="@assets/wall3.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" scaleX="2.0" scaleY="2.0" translateX="30.0" translateY="-40.0">
-                     <image>
-                        <Image url="@assets/Stone Ground1.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.2" translateX="30.0" translateY="-46.0">
-                     <image>
-                        <Image url="@assets/box.png" />
-                     </image>
-                  </ImageView>
                </children>
             </StackPane>
 
@@ -2377,6 +2529,11 @@
                         <Image url="@assets/side_wall3.png" />
                      </image>
                   </ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2406,7 +2563,10 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="1" GridPane.rowIndex="15">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0">
+                     <image>
+                        <Image url="@assets/flower4.png" />
+                     </image></ImageView>
                </children>
             </StackPane>
 
@@ -2585,12 +2745,22 @@
                      <image>
                         <Image url="@assets/corner_wall.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="3" GridPane.rowIndex="16">
                <children>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="5.0" translateY="-20.0">
+                     <image>
+                        <Image url="@assets/drum.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2639,6 +2809,11 @@
                      <image>
                         <Image url="@assets/side_wall3.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass2.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2662,6 +2837,11 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="12" GridPane.rowIndex="16">
                <children>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="4.0">
+                     <image>
+                        <Image url="@assets/stone2.png" />
+                     </image>
+                  </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/side_wall3.png" />
@@ -2675,6 +2855,11 @@
                      <image>
                         <Image url="@assets/side_wall3.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2729,6 +2914,11 @@
                      <image>
                         <Image url="@assets/side_wall3.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2756,23 +2946,48 @@
                      <image>
                         <Image url="@assets/side_wall3.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="15.0">
+                     <image>
+                        <Image url="@assets/grass1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="7" GridPane.rowIndex="17">
                <children>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" translateX="20.0" translateY="-25.0">
+                     <image>
+                        <Image url="@assets/tree1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/stone2.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="8" GridPane.rowIndex="17">
                <children>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass2.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="9" GridPane.rowIndex="17">
                <children>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="230.0" translateX="-10.0">
+                     <image>
+                        <Image url="@assets/flower3.png" />
+                     </image>
+                  </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                      <image>
                         <Image url="@assets/side_wall4.png" />
@@ -2881,6 +3096,11 @@
                      <image>
                         <Image url="@assets/wall6.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateY="-20.0">
+                     <image>
+                        <Image url="@assets/direction.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2926,6 +3146,11 @@
                      <image>
                         <Image url="@assets/corner_wall2.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/plant.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -2962,6 +3187,11 @@
                      <image>
                         <Image url="@assets/wall4.png" />
                      </image></ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateY="-15.0">
+                     <image>
+                        <Image url="@assets/bench.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
 
@@ -3295,7 +3525,10 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="2" GridPane.rowIndex="21">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateY="-6.0">
+                     <image>
+                        <Image url="@assets/stone.png" />
+                     </image></ImageView>
                </children>
             </StackPane>
 
@@ -3325,7 +3558,10 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="7" GridPane.rowIndex="21">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+                     <image>
+                        <Image url="@assets/flower1.png" />
+                     </image></ImageView>
                </children>
             </StackPane>
 
@@ -3349,7 +3585,10 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="11" GridPane.rowIndex="21">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="-4.0" translateY="-16.0">
+                     <image>
+                        <Image url="@assets/square_stone.png" />
+                     </image></ImageView>
                </children>
             </StackPane>
 
@@ -3364,7 +3603,10 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="13" GridPane.rowIndex="21">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/grass2.png" />
+                     </image></ImageView>
                </children>
             </StackPane>
 
@@ -3376,7 +3618,10 @@
 
             <StackPane prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="15" GridPane.rowIndex="21">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="-15.0" translateY="-23.0">
+                     <image>
+                        <Image url="@assets/plant2.png" />
+                     </image></ImageView>
                </children>
             </StackPane>
          </children>

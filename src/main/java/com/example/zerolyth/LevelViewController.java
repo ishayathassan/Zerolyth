@@ -2,13 +2,17 @@ package com.example.zerolyth;
 
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import com.example.zerolyth.puzzle.HanoiController;
 
 public class LevelViewController {
 
@@ -23,9 +27,11 @@ public class LevelViewController {
     private int playerRow;
     private int playerCol;
 
+
     public void setGameSession(GameSession session) {
         this.gameSession = session;
     }
+
 
 
 
@@ -89,7 +95,32 @@ public class LevelViewController {
             return new ImageView();
         }
     }
+    private void freezeGame() {
+        grid.setDisable(true);
+    }
 
+    private void unfreezeGame() {
+        grid.setDisable(false);
+    }
+
+    private void showHanoiPuzzle(Runnable onComplete) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/zerolyth/puzzles/tower.fxml"));
+            Parent hanoiRoot = loader.load();
+            HanoiController hanoiController = loader.getController();
+            hanoiController.setOnSolved(onComplete);
+
+            Stage hanoiStage = new Stage();
+            hanoiStage.setTitle("Hanoi Puzzle");
+            hanoiStage.setScene(new javafx.scene.Scene(hanoiRoot));
+            hanoiStage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+            hanoiStage.setOnHidden(e -> onComplete.run());
+            hanoiStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            onComplete.run();
+        }
+    }
     private void handleKeyPress(KeyEvent event) {
         int newRow = playerRow;
         int newCol = playerCol;
@@ -114,6 +145,16 @@ public class LevelViewController {
                 animateDirectionChange(playerRight);
 
             }
+            case E -> {
+                if (isDoorAdjacentToPlayer(newRow, newCol)) {
+                    System.out.println("Interacting with puzzle at (" + newRow + ", " + newCol + ")");
+                    freezeGame();
+                    showHanoiPuzzle(this::unfreezeGame);
+                } else {
+                    System.out.println("No puzzle to interact with at (" + newRow + ", " + newCol + ")");
+                }
+                return;
+            }
             default -> {
                 return;
             }
@@ -129,6 +170,20 @@ public class LevelViewController {
         if (row < 0 || row >= map.length || col < 0 || col >= map[0].length) return false;
         TileType tile = map[row][col];
         return tile == TileType.PATH || tile == TileType.COLLECTIBLE || tile == TileType.EXIT;
+    }
+    private boolean isDoorAdjacentToPlayer(int playerRow, int playerCol) {
+        TileType[][] map = gameSession.getCurrentLevel().getMap();
+        int[][] directions = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} }; // right, down, left, up
+        for (int[] dir : directions) {
+            int newRow = playerRow + dir[0];
+            int newCol = playerCol + dir[1];
+            if (newRow >= 0 && newRow < map.length && newCol >= 0 && newCol < map[0].length) {
+                if (map[newRow][newCol] == TileType.DOOR) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void updatePlayerPosition(int newRow, int newCol) {

@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import java.util.Stack;
 
@@ -21,9 +24,24 @@ public class HanoiController {
     private boolean isDragging = false;
     private int moveCount = 0;
     private boolean gameWon = false;
+    private Runnable onSolved;
+
+
+
+
+    public void setOnSolved(Runnable onSolved) {
+        this.onSolved = onSolved;
+    }
 
     @FXML
     public void initialize() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Hanoi Puzzle");
+        alert.setHeaderText("Tower of Hanoi");
+        alert.setContentText("These ancient stones must be moved carefully.\n" +
+                "Rebuild the stack on the final pillar to unlock your path.");
+        alert.showAndWait();
+
         // Add blocks to tower1: bottom (eagle) to top (frog)
         tower1.push(block3); // eagle (largest)
         snapToTower(block3, towerPane1, 1);
@@ -108,6 +126,18 @@ public class HanoiController {
             block1.setDisable(true);
             block2.setDisable(true);
             block3.setDisable(true);
+
+            // Show win alert with move count
+            Alert winAlert = new Alert(AlertType.INFORMATION);
+            winAlert.setTitle("Puzzle Solved!");
+            winAlert.setHeaderText("Congratulations!");
+            winAlert.setContentText("✨ The sacred stones rest in order. The ancient mechanism awakens…");
+            winAlert.setContentText("You solved the puzzle in " + moveCount + " moves.\nMinimum possible moves: 7");
+            winAlert.showAndWait();
+
+            // Notify and close window
+            if (onSolved != null) onSolved.run();
+            ((Stage) block1.getScene().getWindow()).close();
         }
     }
 
