@@ -13,6 +13,7 @@ public class GameServer {
 
     private ClientHandler protagonistClient = null;
     private ClientHandler antagonistClient = null;
+    private ClientHandler winnerDeclared = null;
 
     public GameServer(int port) {
         this.port = port;
@@ -68,6 +69,23 @@ public class GameServer {
             // Notify both clients to start the game
             protagonistClient.sendMessage("START_GAME");
             antagonistClient.sendMessage("START_GAME");
+        }
+    }
+    private void broadcastToOthers(ClientHandler sender, String msg) {
+        for (ClientHandler client : clients) {
+            if (client != sender) {
+                client.sendMessage(msg);
+            }
+        }
+    }
+
+    public synchronized void playerFinished(ClientHandler handler) {
+        if (winnerDeclared == null) {
+            winnerDeclared = handler;
+            handler.sendMessage("GAME_RESULT:WIN");
+            broadcastToOthers(handler, "GAME_RESULT:LOSE");
+        } else {
+            handler.sendMessage("GAME_RESULT:LOSE");
         }
     }
 

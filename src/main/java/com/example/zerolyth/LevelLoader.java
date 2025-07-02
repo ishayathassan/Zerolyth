@@ -50,6 +50,7 @@ class LevelLoader {
                         case 11 -> TileType.SIMONSAYS;
                         case 12 -> TileType.CIPHER;
                         case 13 -> TileType.SLIDING;
+                        case 50 -> TileType.RED_GEM; // Assuming 50 is a special tile type
                         default -> throw new IllegalArgumentException("Unknown tile code: " + code);
 
                     };

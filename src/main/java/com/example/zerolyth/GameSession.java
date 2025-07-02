@@ -4,17 +4,36 @@ public class GameSession {
     private Player player;
     private Level currentLevel;
     private GameClient gameClient;
+    private Player winner;
+
+
+    private boolean playerWon;
+
 
     public GameSession(Player player, Level level, GameClient gameClient) {
         this.player = player;
         this.currentLevel = level;
         this.gameClient = gameClient;
 
-        // Future support for initializing puzzles/cutscenes can be added here
-        // this.currentLevel.setPuzzles(PuzzleLoader.loadForLevel(level));
-        // CutsceneManager.loadIntroCutscene(level);
     }
 
+
+    public void setPlayerWon(boolean won) {
+        this.playerWon = won;
+    }
+
+    public boolean didPlayerWin() {
+        return playerWon;
+    }
+
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
     public Player getPlayer() {
         return player;
     }

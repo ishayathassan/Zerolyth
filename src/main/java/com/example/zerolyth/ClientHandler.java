@@ -44,6 +44,9 @@ public class ClientHandler implements Runnable {
                 else if (message.startsWith("PROGRESS:")) {
                     server.broadcastProgress(this, message);
                 }
+                else if (message.equals("RED_GEM_COLLECTED")) {
+                    server.playerFinished(this);
+                }
                 else {
                     System.out.println("Unknown message from client: " + message);
                 }

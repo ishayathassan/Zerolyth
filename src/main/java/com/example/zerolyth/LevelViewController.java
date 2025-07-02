@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
@@ -32,6 +33,7 @@ import java.util.Map;
 
 public class LevelViewController {
 
+    public ImageView redGem;
     @FXML
     private GridPane grid;
     private ImageView playerView;
@@ -81,8 +83,21 @@ public class LevelViewController {
             "/collectibles/gold8.png"
     };
 
+    private final String[] redImages = {
+            "/collectibles/red1.png",
+            "/collectibles/red2.png",
+            "/collectibles/red3.png",
+            "/collectibles/red4.png",
+            "/collectibles/red5.png",
+            "/collectibles/red6.png",
+            "/collectibles/red7.png",
+            "/collectibles/red8.png",
+
+    };
+
     private int blueIndex = 0;
     private int goldIndex = 0;
+    private int redIndex = 0;
 
     // Changed
     @FXML private ProgressBar protagonistProgressBar;
@@ -178,6 +193,9 @@ public class LevelViewController {
         System.out.println("Antagonist progress bar: " + antagonistProgressBar.getProgress());
         initializeProgressBars();
 
+//        gameSession.getPlayer().setCompletedSlidingTilePuzzle(true);
+
+
 //        loadPlayerImages();
 //        TileType[][] map = gameSession.getCurrentLevel().getMap();
 //        playerRow = gameSession.getCurrentLevel().getStartRow();
@@ -208,6 +226,13 @@ public class LevelViewController {
         playerRow = gameSession.getCurrentLevel().getStartRow();
         playerCol = gameSession.getCurrentLevel().getStartCol();
 
+        redGem.setVisible(false);
+//        gameSession.getPlayer().setCompletedCipherPuzzle(true);
+        gameSession.getPlayer().setCompletedSimonSaysPuzzle(true);
+        gameSession.getPlayer().setCompletedSlidingTilePuzzle(true);
+        gameSession.getPlayer().setCompletedHanoiPuzzle(true);
+
+
         playerView = createPlayerView();
 
         StackPane startCell = getCell(playerRow, playerCol);
@@ -224,11 +249,48 @@ public class LevelViewController {
         collectibleViews.put(new Point(14, 12), blueCollectible2);
         collectibleViews.put(new Point(17, 1), goldCollectible1);
 
+        collectibleViews.put(new Point(3,13), redGem);
+
         grid.setFocusTraversable(true);
         grid.requestFocus();
         grid.setOnKeyPressed(this::handleKeyPress);
     }
+    public void showResultScreen(boolean won) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/zerolyth/scoreboard.fxml"));
+            Parent root = loader.load();
 
+            ScoreBoardController controller = loader.getController();
+            controller.setPlayer(gameSession.getPlayer());
+            controller.setResult(won);
+
+            // Get the game window and close it
+            Stage gameStage = (Stage) grid.getScene().getWindow(); // "grid" is any node from the game scene
+            gameStage.close();
+
+            // Now open the result window
+            Stage resultStage = new Stage();
+            resultStage.setScene(new Scene(root));
+            resultStage.setTitle(won ? "You Won!" : "You Lost");
+            resultStage.initModality(Modality.APPLICATION_MODAL); // Optional: prevents clicks on other windows
+            resultStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    private void checkAndShowRedGem() {
+        var player = gameSession.getPlayer();
+        if (player.isCompletedHanoiPuzzle() &&
+                player.isCompletedSimonSaysPuzzle() &&
+                player.isCompletedCipherPuzzle() &&
+                player.isCompletedSlidingTilePuzzle()) {
+            redGem.setVisible(true);
+        }
+    }
     private void removeCollectibleFromMap(int row, int col) {
         gameSession.getCurrentLevel().getMap()[row][col] = TileType.PATH;
     }
@@ -236,6 +298,7 @@ public class LevelViewController {
     private void animateCollectibles() {
         blueIndex = (blueIndex + 1) % blueImages.length;
         goldIndex = (goldIndex + 1) % goldImages.length;
+        redIndex = (redIndex + 1) % redImages.length;
 
         // Animate blue collectibles
         blueCollectible1.setImage(new Image(getClass().getResourceAsStream(blueImages[blueIndex])));
@@ -251,7 +314,8 @@ public class LevelViewController {
         goldCollectible2.setImage(new Image(getClass().getResourceAsStream(goldImages[goldIndex])));
         goldCollectible3.setImage(new Image(getClass().getResourceAsStream(goldImages[goldIndex])));
 
-        // Repeat for all gold collectibles
+        // Animate red collectible
+        redGem.setImage(new Image(getClass().getResourceAsStream(redImages[redIndex])));
     }
 
     private ImageView createPlayerView() {
@@ -341,6 +405,7 @@ public class LevelViewController {
                 gameSession.getPlayer().setCompletedHanoiPuzzle(true);
                 updateLocalProgressBar(); // Changed
                 sendPuzzleProgressUpdate(); // Changed
+                checkAndShowRedGem();
                 onComplete.run();
             });
 
@@ -368,6 +433,8 @@ public class LevelViewController {
                 gameSession.getPlayer().setCompletedSlidingTilePuzzle(true);
                 updateLocalProgressBar(); // Changed
                 sendPuzzleProgressUpdate(); // Changed
+                checkAndShowRedGem();
+
                 onComplete.run();
             });
             Stage slidingStage = new Stage();
@@ -395,6 +462,8 @@ public class LevelViewController {
                 gameSession.getPlayer().setCompletedCipherPuzzle(true);
                 updateLocalProgressBar(); // Changed
                 sendPuzzleProgressUpdate(); // Changed
+                checkAndShowRedGem();
+
                 onComplete.run();
             });
 
@@ -423,6 +492,8 @@ public class LevelViewController {
                 gameSession.getPlayer().setCompletedSimonSaysPuzzle(true);
                 updateLocalProgressBar(); // Changed
                 sendPuzzleProgressUpdate(); // Changed
+                checkAndShowRedGem();
+
                 onComplete.run();
             });
 
@@ -442,7 +513,7 @@ public class LevelViewController {
         TileType[][] map = gameSession.getCurrentLevel().getMap();
         if (row < 0 || row >= map.length || col < 0 || col >= map[0].length) return false;
         TileType tile = map[row][col];
-        return tile == TileType.PATH || tile == TileType.COLLECTIBLE || tile == TileType.EXIT;
+        return tile == TileType.PATH || tile == TileType.COLLECTIBLE || tile == TileType.EXIT || tile == TileType.RED_GEM;
     }
     // Add this method to LevelViewController
     private TileType getAdjacentPuzzleTileType(int playerRow, int playerCol) {
@@ -463,21 +534,13 @@ public class LevelViewController {
     }
 
     private void updatePlayerPosition(int newRow, int newCol) {
-//        TileType[][] map = gameSession.getCurrentLevel().getMap();
-//
-//        if (map[newRow][newCol] == TileType.COLLECTIBLE) {
-////            gameSession.getPlayer().addScore(10);
-//        }
-//
-//        movePlayerView(newRow, newCol);
-//        playerRow = newRow;
-//        playerCol = newCol;
-        // Merge Change
         TileType[][] map = gameSession.getCurrentLevel().getMap();
-        TileType puzzleType = getAdjacentPuzzleTileType(newRow, newCol);
-        if (map[newRow][newCol] == TileType.COLLECTIBLE) {
+        TileType tile = map[newRow][newCol];
+        Point pos = new Point(newRow, newCol);
+
+        // Handle collectible or redGem
+        if (tile == TileType.COLLECTIBLE || tile == TileType.RED_GEM) {
             System.out.println("Player at: " + newRow + ", " + newCol);
-            Point pos = new Point(newRow, newCol);
             ImageView collectedView = collectibleViews.get(pos);
             if (collectedView != null) {
                 System.out.println("Found collectible at: " + pos);
@@ -489,23 +552,30 @@ public class LevelViewController {
 
             gameSession.getPlayer().addCollectible();
             map[newRow][newCol] = TileType.PATH;
+
+            if (tile == TileType.RED_GEM) {
+                gameSession.sendProgressUpdate("RED_GEM_COLLECTED");
+
+                // Show result screen only when **this player** collects red gem
+                Platform.runLater(() -> {
+                    // Check if player won or lost
+                    boolean won = gameSession.didPlayerWin();
+                    showResultScreen(won);
+
+
+                });
+            }
+
         }
 
-        if (puzzleType == TileType.HANOI) {
-            hanoiLabel.setVisible(true);
-        } else  if (puzzleType == TileType.SIMONSAYS) {
-            simonLabel.setVisible(true);
-        } else if (puzzleType == TileType.CIPHER) {
-            cipherLabel.setVisible(true);
-        } else if (puzzleType == TileType.SLIDING) {
-            slidingLabel.setVisible(true);
-        } else {
-            hanoiLabel.setVisible(false);
-            simonLabel.setVisible(false);
-            cipherLabel.setVisible(false);
-            slidingLabel.setVisible(false);
-        }
+        // Update puzzle labels
+        TileType puzzleType = getAdjacentPuzzleTileType(newRow, newCol);
+        hanoiLabel.setVisible(puzzleType == TileType.HANOI);
+        simonLabel.setVisible(puzzleType == TileType.SIMONSAYS);
+        cipherLabel.setVisible(puzzleType == TileType.CIPHER);
+        slidingLabel.setVisible(puzzleType == TileType.SLIDING);
 
+        // Move player
         movePlayerView(newRow, newCol);
         playerRow = newRow;
         playerCol = newCol;

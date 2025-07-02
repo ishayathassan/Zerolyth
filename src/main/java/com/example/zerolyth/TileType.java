@@ -10,6 +10,6 @@ public enum TileType {
     HANOI,        // 10
     SIMONSAYS,    // 11
     CIPHER,       // 12
-    SLIDING       // 13
-
+    SLIDING,      // 13
+    RED_GEM
 }

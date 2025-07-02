@@ -9,6 +9,7 @@ public class Player {
     private boolean completedSimonSaysPuzzle;
     private boolean completedSlidingTilePuzzle;
     private boolean completedCipherPuzzle;
+    private boolean collectedRedGem; // Changed to boolean for clarity
     private int collectiblesCollected;
 
     public int getCollectiblesCollected() {
@@ -38,6 +39,14 @@ public class Player {
         if (completedSlidingTilePuzzle) completed++;
         if (completedCipherPuzzle) completed++;
         return completed * 25; // 25% per puzzle
+    }
+
+    public void setCollectedRedGem(boolean collectedRedGem) {
+        this.collectedRedGem = collectedRedGem;
+    }
+
+    public boolean isCollectedRedGem() {
+        return collectedRedGem;
     }
 
     public boolean isCompletedHanoiPuzzle() {

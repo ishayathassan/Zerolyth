@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GameMenuController {
@@ -27,6 +28,12 @@ public class GameMenuController {
 
     @FXML
     private TextField nameField;
+    private GameSession gameSession;
+
+    private Boolean pendingGameResult = null;
+
+    private String pendingGameResultMessage = null;
+
 
     private GameClient gameClient;
     private Stage primaryStage;
@@ -144,14 +151,52 @@ public class GameMenuController {
         else if (message.equals("PROTAGONIST_DISCONNECTED") || message.equals("ANTAGONIST_DISCONNECTED")) {
             Platform.runLater(() -> statusLabel.setText("Other player disconnected. Waiting..."));
         }
+        else if (message.startsWith("GAME_RESULT:")) {
+            String result = message.substring("GAME_RESULT:".length());
+
+            if (gameSession == null) {
+                System.out.println("Warning: GAME_RESULT received before gameSession is initialized.");
+                pendingGameResultMessage = result;
+            } else {
+                applyGameResult(result);
+            }
+        }
 
     }
+    private void applyGameResult(String resultMessage) {
+        PlayerType type = gameSession.getPlayer().getType();
+        boolean didPlayerWin;
+
+        if (resultMessage.equals("WIN")) {
+            // Server says protagonist won
+            didPlayerWin = (type == PlayerType.PROTAGONIST);
+        } else if (resultMessage.equals("LOSE")) {
+            // Server says antagonist won
+            didPlayerWin = (type == PlayerType.ANTAGONIST);
+        } else {
+            System.err.println("Unknown result message: " + resultMessage);
+            return;
+        }
+
+        System.out.println("Applied game result: PlayerType = " + type + ", Result = " + (didPlayerWin ? "WIN" : "LOSE"));
+        gameSession.setPlayerWon(didPlayerWin);
+    }
+
+
 
     private void startGame() {
         try {
             Player player = new Player(nameField.getText().trim(), selectedRole);
             Level level = LevelLoader.loadFromFile("levels/level1.txt");
             GameSession session = new GameSession(player, level, gameClient);
+            this.gameSession = session; // 🔥 make sure this is done BEFORE applying pending result
+
+            if (pendingGameResultMessage != null) {
+                applyGameResult(pendingGameResultMessage);
+                pendingGameResultMessage = null;
+            }
+
+
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/zerolyth/level1_collectibles.fxml"));
             Parent root = loader.load();
