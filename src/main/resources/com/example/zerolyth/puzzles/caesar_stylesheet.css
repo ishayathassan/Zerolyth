@@ -1,0 +1,89 @@
+/* ===========================
+   COMMON SETTINGS
+=========================== */
+.root {
+    -fx-font-family: "Papyrus", "Georgia", serif;
+    -fx-base: #3a352d;
+}
+
+/* ===========================
+   BUTTONS (Stone with glow)
+=========================== */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #5b4a36, #403328);
+    -fx-background-radius: 12;
+    -fx-border-color: #89d8ff;
+    -fx-border-radius: 5;
+    -fx-border-width: 2;
+    -fx-text-fill: #d4f6ff;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #58c4ff, 8, 0.6, 0, 0);
+    -fx-padding: 5 10 5 10;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #6c5944, #4b3e31);
+    -fx-effect: dropshadow(gaussian, #b1f0ff, 12, 0.6, 0, 0);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.button:pressed {
+    -fx-background-color: #2c231a;
+    -fx-effect: dropshadow(gaussian, #4ec7ff, 5, 0.3, 0, 0);
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}
+
+/* ===========================
+   TOGGLE BUTTON (Rune Glow)
+=========================== */
+.toggle-button {
+    -fx-background-color: #2f2a22;
+    -fx-text-fill: #9de2ff;
+    -fx-border-color: #66d0ff;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+    -fx-effect: dropshadow(gaussian, #48bbff, 8, 0.5, 0, 0);
+}
+
+.toggle-button:selected {
+    -fx-background-color: #114455;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, #00ccff, 16, 0.8, 0, 0);
+}
+
+/* ===========================
+   TEXT FIELD (Scroll Paper Look)
+=========================== */
+.text-field {
+    -fx-background-color: #d4bfa1;
+    -fx-border-color: #5a4837;
+    -fx-border-width: 2;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-text-fill: #2c1f15;
+    -fx-font-size: 14px;
+    -fx-padding: 6 10;
+    -fx-prompt-text-fill: #8e7760;
+    -fx-effect: innershadow(gaussian, #5c4a3a, 4, 0.5, 0, 0);
+}
+
+/* ===========================
+   LABEL (Stone-Carved Text)
+=========================== */
+.label {
+    -fx-text-fill: #f0e5d8;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #1e140a, 2, 0.4, 1, 1);
+}
+
+/* Glowing special label (optional) */
+.label.glow {
+    -fx-text-fill: #d9faff;
+    -fx-effect: dropshadow(gaussian, #88eeff, 6, 0.8, 0, 0);
+}

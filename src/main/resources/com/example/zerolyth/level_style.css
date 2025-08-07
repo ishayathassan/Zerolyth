@@ -1,0 +1,41 @@
+.root { -fx-background-color: cornsilk; -fx-padding: 15; }
+
+/* Jungle-themed progress bar */
+.root {
+    -fx-background-color: #2a5d34; /* Jungle green background */
+    -fx-padding: 15;
+}
+
+.progress-bar {
+    -fx-box-border: #3b7a40; /* Dark green border */
+    -fx-background-color: linear-gradient(to bottom, #4caf50, #2e7d32); /* Gradient for the bar */
+    -fx-padding: 5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.green-bar {
+    -fx-accent: #76c893; /* Light jungle green */
+}
+
+.yellow-bar {
+    -fx-accent: #f4d03f; /* Jungle yellow (golden) */
+}
+
+.orange-bar {
+    -fx-accent: #e67e22; /* Jungle orange */
+}
+
+.red-bar {
+    -fx-accent: #c0392b; /* Jungle red */
+}
+
+/* Add some texture to the progress bar */
+.progress-bar .track {
+    -fx-background-color: #1e4620; /* Darker green for the track */
+    -fx-background-radius: 10;
+}
+
+.progress-bar .bar {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0.5, 0, 1); /* Shadow effect for depth */
+}

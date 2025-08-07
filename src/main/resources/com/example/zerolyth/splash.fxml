@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootPane" prefHeight="509.0" prefWidth="742.0"
+            xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.zerolyth.SplashController">
+   <!-- children -->
+      <ImageView fitHeight="596.0" fitWidth="853.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/GameMenu2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="gamelogo" fitHeight="181.0" fitWidth="530.0" layoutX="162.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@assets/logo.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="homeprompt" alignment="CENTER" layoutX="264.0" layoutY="136.0" prefHeight="23.0" prefWidth="327.0" text="Press any key to continue" textAlignment="CENTER" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Orbitron Regular" size="18.0" />
+         </font>
+      </Label>
+</AnchorPane>
