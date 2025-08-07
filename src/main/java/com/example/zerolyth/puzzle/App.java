@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/zerolyth/puzzles/caesar_cipher.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/zerolyth/puzzles/tower.fxml"));
         Scene scene = new Scene(loader.load());
 
         // Load CSS
